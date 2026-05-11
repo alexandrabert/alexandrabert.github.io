@@ -5,7 +5,7 @@ export const projects = [
     logo: "SpotifINT/spotifint.svg",
     folder : "SpotifINT/",
     projetType: "Projet associatif et personnel pour l'association MiNET",
-    fullDescription: "Développement d'une interface moderne pour l'écoute de musique créée sur le campus de l'IMT (Institut Mines-Télécom) avec gestion des playlists, like et vues et intégration d'une API FastAPI. Application web inspirée de Spotify, avec une hiérarchie de données complexe (Asso > Club > Liste). Cette plateforme est la nouvelle version améliorée de l'ancien projet 'Spotif'INT', qui lisait des vidéo youtube via un système de liens.",
+    fullDescription: "Développement d'une interface moderne pour l'écoute de musique créée sur le campus de l'IMT (Institut Mines-Télécom) avec gestion des playlists, like et vues et intégration de FastAPI. Application web inspirée de Spotify. Cette plateforme est la nouvelle version améliorée de l'ancien projet 'Spotif'INT', qui lisait des vidéo youtube via un système de liens.",
     technos: [
         { name: "Vue.js", icon : "vue.svg" },
         { name: "FastAPI", icon: "fastapi.svg" },
@@ -14,6 +14,11 @@ export const projects = [
     ],
     mockups: ["spotif1.png", "spotif_demo.mp4"],
     planAction: [
+        { 
+            step: "Projet initial à remanier", 
+            desc: "Le spotif'int actuel est une application de lecture de vidéos YouTube via des liens, avec une interface basique.",
+            gallery: ["ancien-projet.pdf"]
+        },
         { 
             step: "UX/UI : Maquettes mobile et desktop", 
             desc: "Développement d'une PWA d'abord orientée utilisateur mobile (car plus souvent utilisée). Système de lecture fluide avec bascule intelligente entre le 'Mini-Player' (navigation) et le 'Full-Player' (immersion). Design simple et reprenant les couleurs de l'association MiNET.",
@@ -53,7 +58,7 @@ export const projects = [
         },
         { 
           step: "Sécurisation", 
-          desc: "Authentification des étudiants via le système quiklook de l'association MiNET." ,
+          desc: "Authentification des étudiants via le système Keycloak de l'association MiNET." ,
           //gallery: [ "net-authentication.png" ] 
         }
     ]
@@ -64,7 +69,7 @@ export const projects = [
   folder : "SafeINT/",
   logo: "SafeINT/safeint.png",
   projetType: "Projet scolaire dans le cadre du module \"Cassiopée\"",
-  fullDescription: "Safe INT est une solution complète de sécurité étudiante. Elle intègre un backend FastAPI complexe gérant des appels d'urgence, du suivi GPS en temps réel et la gestion de lieux de refuge (Safe Places).",
+  fullDescription: "Safe INT est une application de sécurité étudiante. Elle permet de gérer les situations d'urgence sur le campus. Avec un frontend en Flutter et un backend FastAPI complexe gérant des appels d'urgence, l'appli permet de faire des appels, du suivi GPS en temps réel et la gestion de lieux de refuge (Safe Places).",
   technos: [
     { name: "Flutter", icon: "flutter.svg" },
     { name: "FastAPI", icon: "fastapi.svg" },
