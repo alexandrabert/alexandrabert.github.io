@@ -1,5 +1,46 @@
 export const projects = [
   {
+    id: "micloud",
+    title: "MiCloud - 2026",
+    logo: "MiCloud/micloud.svg",
+    folder : "MiCloud/",
+    projetType: "Conférence annuelle sur le numérique organisée par l'association MiNET",
+    fullDescription: "Étant au pôle communication de l'association de réseau et d'informatique, MiNET, je me suis chargée de la promotion et communication de la conférence MiCloud. Le thème de cette édition était 'La souveraineté numérique'. La conférence s'articule autour de prise de parole d'intervenants (professeurs, professionels).",
+    technos: [
+        { name: "Figma", icon : "figma.svg" },
+        { name: "Photoshop", icon: "photoshop.svg" },
+        { name: "AfterEffect", icon: "ae.svg" },
+        { name : "DaVinci Resolve", icon: "davinci.svg" }
+    ],
+    planAction: [
+      { 
+        step: "Identité visuelle", 
+        desc: "Pour aborder le thème de la souveraineté numérique, j'ai proposé trois moodboards différents aux autres membres de l'association Minet. Nous avons choisi une identité colorée et pop, ce qui permet de rendre l'événement bien plus attractif pour les étudiants qui s'imaginent souvent que ces conférences sont trop techniques.",
+        gallery: ["moodboard1.png", "moodboard2.png", "moodboard3.png"]
+      },
+      { 
+        step: "Stratégie de communication", 
+        desc: "J'ai structuré le planning de communication pour démarrer la diffusion un mois et demi avant l'événement, en prévoyant des supports variés comme du physique, du numérique et des goodies. J'ai également défini des échéances précises pour coordonner nos échanges avec l'école et les entreprises partenaires (intervenants).",
+        gallery: ["planning.pdf"]
+      },
+      { 
+        step: "Charte graphique et ses déclinaisons", 
+        desc: "Une fois la direction artistique validée, j'ai mis en place la charte graphique avec le logo et les typographies. J'ai ensuite créé plusieurs icônes et affiches spécifiques pour illustrer les différents sous-thèmes de la souveraineté numérique.",
+        gallery: ["charte-graphique-micloud.pdf"]
+      },
+      { 
+        step: "Communication auprès des étudiants", 
+        desc: "Nous avons lancé la communication auprès des étudiants de Télécom SudParis à l'aide de formats très divers : des 'Save the date', des posts Instagram, des bannières sur les bâtiments et des mails d'information. Pour créer une dynamique sur le campus, nous avons aussi partagé des photos de profil temporaires aux couleurs de l'événement.",
+        gallery: ["affiche1.png", "affiche2.png", "affiche3.png", "savethedate.mp4", "insta-micloud.png"]
+      },
+      { 
+        step: "Couverture le jour J", 
+        desc: "Le jour de la conférence, j'ai assuré le suivi en direct sur Instagram à travers plusieurs stories interactives. J'ai également filmé différents moments de la conférence et de l'afterwork afin de rassembler des rushs pour la création d'un aftermovie.",
+        gallery: []
+      }
+    ]
+  },
+  {
     id: "spotif-int",
     title: "Spotif'INT",
     logo: "SpotifINT/spotifint.svg",
@@ -12,7 +53,6 @@ export const projects = [
         { name: "TailwindCSS", icon: "tailwindcss.svg" },
         { name : "SQLite", icon: "sqlite.svg" }
     ],
-    mockups: ["spotif1.png", "spotif_demo.mp4"],
     planAction: [
         { 
             step: "Projet initial à remanier", 
