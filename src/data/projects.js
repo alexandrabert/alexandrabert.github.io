@@ -1,5 +1,40 @@
 export const projects = [
   {
+    id: "gala",
+    title: "Gala des Télécoms",
+    logo: "Gala/gala-des-telecoms.svg",
+    folder : "Gala/",
+    projetType: "Communication événementielle étudiante",
+	fullDescription: "Campagne de communication globale pour la toute première édition du Gala des Télécoms au Palais Brongniart, co-organisée par le Forum des Télécommunications et le BDE. En tant que responsable communication au sein d'une équipe de trois personnes pour Forum, j'ai géré la création de l'identité et la promotion de l'événement.",
+  technos: [
+        { name: "Figma", icon : "figma.svg" },
+        { name: "Photoshop", icon: "photoshop.svg" },
+        { name : "DaVinci Resolve", icon: "davinci.svg" }
+    ],
+    planAction: [
+      { 
+        step: "Identité", 
+        desc: "Nous avons opté pour le thème 'Midnight Sky' avec une palette bleu et doré pour un rendu très chic. Ce choix permettait aussi de faire un clin d'œil discret aux couleurs des deux associations organisatrices.",
+        gallery: ["moodboard1.png"]
+      },
+      { 
+        step: "Charte graphique", 
+        desc: "J'ai créée la charte graphique de cette édition première édition du Gala en accord avec les membres de l'équipe.",
+        gallery: ["charte-graphique-gala.pdf"]
+      },
+      { 
+        step: "Supports de communication", 
+        desc: "Nous avons décliné la communication sur des affiches, posts Instagram, bannières physiques et mails aux étudiants. En binôme avec Luca Fuster, je me suis également chargée des visuels destinés aux entreprises partenaires comme Fortress.",
+        gallery: ["affiche1.png", "affiche2.png", "affiche3.png", "insta-gala.png"]
+      },
+      { 
+        step: "Vidéos", 
+        desc: "La stratégie vidéo s'est articulée autour de deux réalisations majeures. Nous avons d'abord diffusé un teaser pour lancer l'événement, puis un aftermovie pour proposer un retour en images sur la soirée.",
+        gallery: ["teaser-gala.mp4", "aftermovie-gala.mp4"]
+      }
+    ]
+  },
+  {
     id: "partage",
     title: "GATE - Part'âgé",
     logo: "GATE/gate.svg",
