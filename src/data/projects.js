@@ -1,11 +1,41 @@
 export const projects = [
   {
+    id: "partage",
+    title: "GATE - Part'âgé",
+    logo: "GATE/gate.svg",
+    folder : "GATE/",
+    projetType: "Projet d'engagement étudiant.",
+    fullDescription: "Part'âgé est un projet GATE qui vise à donner des cours d'informatique élémentaire aux séniors de la ville d'Evry. L'objectif est de réduire la fracture numérique et de favoriser l'inclusion sociale des personnes âgées en leur permettant d'acquérir des compétences numériques de base.",
+    technos: [
+        { name: "Figma", icon : "figma.svg" },
+        { name: "Powerpoint", icon: "powerpoint.svg" },
+        { name: "Google Slides", icon: "google-slides.svg" }
+    ],
+    planAction: [
+      { 
+        step: "Fiches récapitulatives", 
+        desc: "J'ai conçu des fiches résumées pour chaque cours d'informatique afin d'aider les seniors à réviser facilement chez eux. Pour m'adapter au mieux à ce public, j'ai privilégié un format très visuel, épuré et simple à lire.",
+        gallery: ["fiche1.png", "fiche2.png", "fiche3.png"]
+      },
+      { 
+        step: "Support de soutenance", 
+        desc: "Pour présenter le projet lors de la soutenance finale, j'ai préparé des slides avec une consigne stricte : presque aucun texte. J'ai donc misé sur un contenu très visuel pour accompagner et dynamiser notre présentation orale.",
+        gallery: ["soutenance1.pdf"]
+      },
+      { 
+        step: "Poster du projet", 
+        desc: "J'ai également réalisé le poster final du projet Part'âge, un élément important qui comptait pour notre note finale. L'objectif était de proposer une affiche percutante pour promouvoir le projet.",
+        gallery: ["poster.png"]
+      }
+    ]
+  },
+  {
     id: "micloud",
     title: "MiCloud - 2026",
     logo: "MiCloud/micloud.svg",
     folder : "MiCloud/",
     projetType: "Conférence annuelle sur le numérique organisée par l'association MiNET",
-    fullDescription: "Étant au pôle communication de l'association de réseau et d'informatique, MiNET, je me suis chargée de la promotion et communication de la conférence MiCloud. Le thème de cette édition était 'La souveraineté numérique'. La conférence s'articule autour de prise de parole d'intervenants (professeurs, professionels).",
+    fullDescription: "Au sein du pôle communication de l'association MiNET, j'ai réalisé la campagne de promotion pour la conférence MiCloud, qui avait pour thème la souveraineté numérique. La conférence s'articule autour de prise de parole d'intervenants (professeurs, professionels).",
     technos: [
         { name: "Figma", icon : "figma.svg" },
         { name: "Photoshop", icon: "photoshop.svg" },
