@@ -2,18 +2,28 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { projects } from '../data/projects';
-import { ChevronLeft, Rocket, Folder, ChevronDown } from 'lucide-vue-next';
+import { ChevronLeft, Rocket, Folder, ChevronDown, FileText } from 'lucide-vue-next';
 
 const route = useRoute();
 const project = projects.find(p => p.id === route.params.id);
 const openFolders = ref(new Set());
+const selectedMedia = ref(null);
 
 const toggleFolder = (index) => {
   if (openFolders.value.has(index)) openFolders.value.delete(index);
   else openFolders.value.add(index);
 };
-const isPDF = (filename) => {
-  return filename.toLowerCase().endsWith('.pdf');
+
+const isImage = (filename) => /\.(png|jpe?g)$/i.test(filename);
+const isVideo = (filename) => /\.mp4$/i.test(filename);
+const isPDF = (filename) => filename.toLowerCase().endsWith('.pdf');
+
+const openMedia = (filename) => {
+  selectedMedia.value = filename;
+};
+
+const closeMedia = () => {
+  selectedMedia.value = null;
 };
 
 onMounted(() => window.scrollTo(0, 0));
@@ -100,12 +110,22 @@ onMounted(() => window.scrollTo(0, 0));
                       class="relative group rounded-2xl p-2 bg-slate-100 shadow-[6px_6px_12px_#d1d5db,-6px_-6px_12px_#ffffff] transition-all duration-300 hover:shadow-[2px_2px_5px_#d1d5db,-2px_-2px_5px_#ffffff]">
                     
                     <!-- CAS : IMAGE -->
-                    <div v-if="!isPDF(file)" class="aspect-video rounded-xl overflow-hidden bg-slate-200">
-                      <img 
-                        :src="'/' + project.folder + file" 
-                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-700 cursor-zoom-in" 
-                        alt="Document" 
-                      />
+                    <button v-if="isImage(file)" type="button" class="w-full" @click="openMedia(file)">
+                      <div class="aspect-video rounded-xl overflow-hidden bg-slate-200">
+                        <img 
+                          :src="'/' + project.folder + file" 
+                          class="w-full h-full object-cover hover:scale-105 transition-transform duration-700 cursor-zoom-in" 
+                          alt="Document" 
+                        />
+                      </div>
+                    </button>
+
+                    <!-- CAS : VIDÉO -->
+                    <div v-else-if="isVideo(file)" class="aspect-video rounded-xl overflow-hidden bg-slate-950">
+                      <video controls class="w-full h-full object-contain">
+                        <source :src="'/' + project.folder + file" type="video/mp4" />
+                        Votre navigateur ne prend pas en charge les vidéos HTML5.
+                      </video>
                     </div>
 
                     <!-- CAS : PDF -->
@@ -119,6 +139,7 @@ onMounted(() => window.scrollTo(0, 0));
                       <a 
                         :href="'/' + project.folder + file" 
                         target="_blank"
+                        rel="noopener noreferrer"
                         class="text-[11px] font-black uppercase tracking-tighter px-4 py-2 rounded-lg bg-slate-100 shadow-[3px_3px_6px_#d1d5db,-3px_-3px_6px_#ffffff] hover:text-blue-600 active:shadow-[inset_2px_2px_4px_#d1d5db] transition-all"
                       >
                         Ouvrir le PDF
@@ -133,6 +154,34 @@ onMounted(() => window.scrollTo(0, 0));
         </div>
       </section>
     </article>
+
+    <div v-if="selectedMedia" class="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/90 p-4 backdrop-blur-sm" @click.self="closeMedia">
+      <div class="relative w-full max-w-6xl">
+        <button
+          type="button"
+          class="absolute right-2 top-2 z-10 rounded-full bg-white/90 px-3 py-2 text-sm font-bold text-slate-700 shadow-lg"
+          @click="closeMedia"
+        >
+          ✕
+        </button>
+        <div class="overflow-hidden rounded-[2rem] bg-slate-900/80 p-2 shadow-2xl">
+          <img
+            v-if="isImage(selectedMedia)"
+            :src="'/' + project.folder + selectedMedia"
+            class="max-h-[85vh] w-full object-contain"
+            :alt="selectedMedia"
+          />
+          <video
+            v-else-if="isVideo(selectedMedia)"
+            controls
+            autoplay
+            class="max-h-[85vh] w-full object-contain bg-black"
+          >
+            <source :src="'/' + project.folder + selectedMedia" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
