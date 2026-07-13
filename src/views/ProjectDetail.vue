@@ -16,7 +16,13 @@ const toggleFolder = (index) => {
 
 const isImage = (filename) => /\.(png|jpe?g)$/i.test(filename);
 const isVideo = (filename) => /\.mp4$/i.test(filename);
+const isYouTube = (filename) => /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\//i.test(filename);
 const isPDF = (filename) => filename.toLowerCase().endsWith('.pdf');
+
+const getYouTubeEmbedUrl = (url) => {
+  const match = url.match(/(?:youtube\.com\/watch\?v=|youtube\.com\/embed\/|youtu\.be\/)([\w-]{11})/i);
+  return match ? `https://www.youtube.com/embed/${match[1]}` : null;
+};
 
 const openMedia = (filename) => {
   selectedMedia.value = filename;
@@ -119,6 +125,18 @@ onMounted(() => window.scrollTo(0, 0));
                         />
                       </div>
                     </button>
+
+                    <!-- CAS : YOUTUBE -->
+                    <div v-else-if="isYouTube(file)" class="aspect-video rounded-xl overflow-hidden bg-slate-950">
+                      <iframe
+                        v-if="getYouTubeEmbedUrl(file)"
+                        :src="getYouTubeEmbedUrl(file)"
+                        class="h-full w-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                        title="YouTube video"
+                      />
+                    </div>
 
                     <!-- CAS : VIDÉO -->
                     <div v-else-if="isVideo(file)" class="aspect-video rounded-xl overflow-hidden bg-slate-950">
