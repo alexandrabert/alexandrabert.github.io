@@ -1,19 +1,24 @@
 <script setup>
 import { projects } from '../data/projects'
+
+const hasFeaturedVisual = (project) => Boolean(project['princ-visual']?.trim())
+const getProjectVisualPath = (project) => `/${project.folder}${project['princ-visual']}`
+const getProjectLogoPath = (project) => `/${project.logo}`
 </script>
 
 <template>
   <!-- Fond légèrement grisé indispensable pour le néomorphisme -->
   <div class="min-h-screen bg-slate-100 font-sans antialiased text-slate-800 pb-20">
     
-    <div class="max-w-6xl mx-auto px-6 py-16">
+    <div class="max-w-5xl mx-auto px-6 py-16">
       <!-- Header avec relief léger -->
       <header class="text-center mb-10 p-10 rounded-[40px] shadow-[20px_20px_60px_#bebebe,-10px_-10px_40px_#ffffff]">
-        <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4 text-slate-900">
+        <h1 class="text-3xl md:text-6xl font-black tracking-tight mb-4 text-slate-900">
           Alexandra Bert
         </h1>
         <p class="text-lg text-slate-500 font-medium tracking-[0.2em] uppercase">
-          Développeuse Web, Mobile et Logiciels
+          Développeuse Web, Mobile et Logiciels <br>
+          Graphisme et communication
         </p>
       </header>
 
@@ -26,13 +31,29 @@ import { projects } from '../data/projects'
           class="group relative bg-slate-100 rounded-[2.5rem] p-4 transition-all duration-500 shadow-[20px_20px_60px_#bebebe,-20px_-20px_60px_#ffffff] hover:shadow-[inset_20px_20px_60px_#bebebe,inset_-20px_-20px_60px_#ffffff]"
         >
           <!-- Mockup / Image Area (effet enfoncé) -->
-          <div class="aspect-video bg-slate-100 rounded-[2rem] flex items-center justify-center relative overflow-hidden shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff] mb-8">
-  
-            <!-- Le Logo avec un léger relief pour sortir de la zone enfoncée -->
-            <div class="w-30 h-30 p-4 bg-slate-100 rounded-3xl shadow-[6px_6px_12px_#bebebe,-6px_-6px_12px_#ffffff] group-hover:scale-110 transition-transform duration-500">
-              <img 
-                :src="'/' + project.logo" 
-                class="w-full h-full object-contain opacity-80 group-hover:opacity-100 transition-opacity" 
+          <div class="aspect-video bg-slate-100 rounded-[2rem] relative overflow-hidden shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff] mb-8">
+            <img
+              v-if="hasFeaturedVisual(project)"
+              :src="getProjectVisualPath(project)"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              :alt="project.title"
+            />
+            <div v-else class="w-full h-full flex items-center justify-center">
+              <div class="w-30 h-30 p-4 bg-slate-100 rounded-3xl shadow-[6px_6px_12px_#bebebe,-6px_-6px_12px_#ffffff] group-hover:scale-110 transition-transform duration-500">
+                <img
+                  :src="getProjectLogoPath(project)"
+                  class="w-full h-full object-contain opacity-80 group-hover:opacity-100 transition-opacity"
+                  :alt="project.title"
+                />
+              </div>
+            </div>
+
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/15 via-transparent to-slate-100/10"></div>
+
+            <div class="absolute bottom-4 right-4 w-16 h-16 p-3 bg-slate-100/90 rounded-2xl shadow-[6px_6px_12px_#bebebe,-6px_-6px_12px_#ffffff] backdrop-blur-sm">
+              <img
+                :src="getProjectLogoPath(project)"
+                class="w-full h-full object-contain opacity-90"
                 :alt="project.title"
               />
             </div>
@@ -47,7 +68,7 @@ import { projects } from '../data/projects'
               {{ project.title }}
             </h2>
             <p class="text-slate-500 text-lg leading-relaxed mb-8 font-medium">
-              {{ project.shortDescription }}
+              {{ project.shortDescription || project.projetType }}
             </p>
             
             <!-- Tech Badges (effet bouton néomorphique) -->

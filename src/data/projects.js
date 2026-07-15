@@ -1,10 +1,13 @@
-// https://www.swisstransfer.com/d/0ffcb461-7cf9-4b7c-b7cd-a63f4070e928
+// TODO
+// Trouver image pour tous les projets (gate, micloud, spotif'int, safe-int)
+
 export const projects = [
   {
     id: "gala",
     title: "Gala des Télécoms",
-    logo: "Gala/gala-des-telecoms.svg",
+    logo: "Gala/gala.svg",
     folder : "Gala/",
+    "princ-visual": "affiche1.png",
     projetType: "Communication événementielle étudiante",
     fullDescription: "Campagne de communication pour la toute première édition du Gala des Télécoms au Palais Brongniart, co-organisée par le Forum des Télécommunications et le BDE. En tant que responsable communication au sein d'une équipe de trois personnes pour Forum, j'ai géré la création de l'identité et la promotion de l'événement.",
     technos: [
@@ -16,7 +19,7 @@ export const projects = [
       { 
         step: "Identité", 
         desc: "Nous avons opté pour le thème 'Midnight Sky' avec une palette bleu et doré pour un rendu très chic. Ce choix permettait aussi de faire un clin d'œil discret aux couleurs des deux associations organisatrices.",
-        gallery: ["moodboard1.png"]
+        gallery: ["moodboard.png"]
       },
       { 
         step: "Charte graphique", 
@@ -40,6 +43,7 @@ export const projects = [
     title: "Bike & Run",
     logo: "BikeRun/bike-and-run.svg",
     folder : "BikeRun/",
+    "princ-visual": "banniere.png",
     projetType: "Communication sportive & événementielle",
     fullDescription: "Campagne de communication pour la deuxième édition du Bike and Run, un événement sportif organisé par le Forum des Télécommunications qui rassemble des professionnels d'entreprises et des étudiants en binômes. J'ai pris en charge la déclinaison graphique et la promotion de l'événement sur le campus.",
     technos: [
@@ -56,7 +60,7 @@ export const projects = [
       { 
         step: "Supports", 
         desc: "Nous avons communiqué auprès des étudiants pendant un mois via des affiches, des posts Instagram, des bannières et des photos de profil. Cette stratégie ciblée visait à encourager les inscriptions pour courir aux côtés des professionnels.",
-        gallery: ["support1.png", "support2.png", "pp.png", "post-insta.png", "banniere.png"]
+        gallery: ["affiche1.png", "affiche2.png", "pp.png", "post-insta.png", "banniere.png"]
       }
     ]
   },
@@ -65,6 +69,7 @@ export const projects = [
     title: "GATE - Part'âgé",
     logo: "GATE/gate.png",
     folder : "GATE/",
+    "princ-visual": "gate.png",
     projetType: "Projet d'engagement étudiant (2024-2025)",
     fullDescription: "Part'âgé est un projet GATE qui vise à donner des cours d'informatique élémentaire aux séniors de la ville d'Evry. L'objectif est de réduire la fracture numérique et de favoriser l'inclusion sociale des personnes âgées en leur permettant d'acquérir des compétences numériques de base.",
     technos: [
@@ -95,6 +100,7 @@ export const projects = [
     title: "MiCloud - 2026",
     logo: "MiCloud/micloud.svg",
     folder : "MiCloud/",
+    "princ-visual": "affiche3.png",
     projetType: "Conférence annuelle sur le numérique organisée par l'association MiNET",
     fullDescription: "Au sein du pôle communication de l'association MiNET, j'ai réalisé la campagne de promotion pour la conférence MiCloud, qui avait pour thème la souveraineté numérique. La conférence s'articule autour de prise de parole d'intervenants (professeurs, professionels).",
     technos: [
@@ -136,6 +142,7 @@ export const projects = [
     title: "Spotif'INT",
     logo: "SpotifINT/spotifint.svg",
     folder : "SpotifINT/",
+    "princ-visual": "diagramme-de-classe.png",
     projetType: "Projet associatif et personnel pour l'association MiNET",
     fullDescription: "Développement d'une interface moderne pour l'écoute de musique créée sur le campus de l'IMT (Institut Mines-Télécom) avec gestion des playlists, like et vues et intégration de FastAPI. Application web inspirée de Spotify. Cette plateforme est la nouvelle version améliorée de l'ancien projet 'Spotif'INT', qui lisait des vidéo youtube via un système de liens.",
     technos: [
@@ -199,6 +206,7 @@ export const projects = [
   title: "Safe INT",
   folder : "SafeINT/",
   logo: "SafeINT/safeint.png",
+  "princ-visual": "dashboard.png",
   projetType: "Projet scolaire dans le cadre du module \"Cassiopée\"",
   fullDescription: "Safe INT est une application de sécurité étudiante. Elle permet de gérer les situations d'urgence sur le campus. Avec un frontend en Flutter et un backend FastAPI complexe gérant des appels d'urgence, l'appli permet de faire des appels, du suivi GPS en temps réel et la gestion de lieux de refuge (Safe Places).",
   technos: [
