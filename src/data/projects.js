@@ -25,7 +25,7 @@ export const projects = [
       { 
         step: "Supports de communication", 
         desc: "Nous avons décliné la communication sur des affiches, posts Instagram, bannières physiques et mails aux étudiants. En binôme avec Luca Fuster, je me suis également chargée des visuels destinés aux entreprises partenaires comme Fortress.",
-        gallery: ["affiche1.png", "affiche2.png", "affiche3.png", "insta-gala.png"]
+        gallery: ["affiche1.png", "banniere.png", "affiche2.png", "insta-gala.png", "pp.png", "ticket.png"]
       },
       { 
         step: "Vidéos", 
@@ -37,8 +37,8 @@ export const projects = [
   {
     id: "bikeandrun",
     title: "Bike & Run",
-    logo: "BikeAndRun/bike-and-run.svg",
-    folder : "BikeAndRun/",
+    logo: "BikeRun/bike-and-run.svg",
+    folder : "BikeRun/",
     projetType: "Communication sportive & événementielle",
     fullDescription: "Campagne de communication pour la deuxième édition du Bike and Run, un événement sportif organisé par le Forum des Télécommunications qui rassemble des professionnels d'entreprises et des étudiants en binômes. J'ai pris en charge la déclinaison graphique et la promotion de l'événement sur le campus.",
     technos: [
@@ -55,16 +55,16 @@ export const projects = [
       { 
         step: "Supports", 
         desc: "Nous avons communiqué auprès des étudiants pendant un mois via des affiches, des posts Instagram, des bannières et des photos de profil. Cette stratégie ciblée visait à encourager les inscriptions pour courir aux côtés des professionnels.",
-        gallery: ["support1.png", "support2.png", "post-insta.png", "banniere.png"]
+        gallery: ["support1.png", "support2.png", "pp.png", "post-insta.png", "banniere.png"]
       }
     ]
   },
   {
     id: "partage",
     title: "GATE - Part'âgé",
-    logo: "GATE/gate.svg",
+    logo: "GATE/gate.png",
     folder : "GATE/",
-    projetType: "Projet d'engagement étudiant.",
+    projetType: "Projet d'engagement étudiant (2024-2025)",
     fullDescription: "Part'âgé est un projet GATE qui vise à donner des cours d'informatique élémentaire aux séniors de la ville d'Evry. L'objectif est de réduire la fracture numérique et de favoriser l'inclusion sociale des personnes âgées en leur permettant d'acquérir des compétences numériques de base.",
     technos: [
         { name: "Figma", icon : "figma.svg" },
@@ -75,17 +75,17 @@ export const projects = [
       { 
         step: "Fiches récapitulatives", 
         desc: "J'ai conçu des fiches résumées pour chaque cours d'informatique afin d'aider les seniors à réviser facilement chez eux. Pour m'adapter au mieux à ce public, j'ai privilégié un format très visuel, épuré et simple à lire.",
-        gallery: ["fiche1.png", "fiche2.png", "fiche3.png"]
+        gallery: ["fiche1.pdf", "fiche2.pdf", "fiche3.pdf"]
       },
       { 
         step: "Support de soutenance", 
         desc: "Pour présenter le projet lors de la soutenance finale, j'ai préparé des slides avec une consigne stricte : presque aucun texte. J'ai donc misé sur un contenu très visuel pour accompagner et dynamiser notre présentation orale.",
-        gallery: ["soutenance1.pdf"]
+        gallery: ["soutenance.pdf"]
       },
       { 
         step: "Poster du projet", 
-        desc: "J'ai également réalisé le poster final du projet Part'âge, un élément important qui comptait pour notre note finale. L'objectif était de proposer une affiche percutante pour promouvoir le projet.",
-        gallery: ["poster.png"]
+        desc: "J'ai également réalisé l'affiche final du projet Part'âge, un élément important qui comptait pour notre note finale. L'objectif était de proposer une affiche percutante pour promouvoir le projet.",
+        gallery: ["affiche.pdf"]
       }
     ]
   },
