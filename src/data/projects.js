@@ -5,8 +5,8 @@ export const projects = [
     logo: "Gala/gala-des-telecoms.svg",
     folder : "Gala/",
     projetType: "Communication événementielle étudiante",
-	fullDescription: "Campagne de communication globale pour la toute première édition du Gala des Télécoms au Palais Brongniart, co-organisée par le Forum des Télécommunications et le BDE. En tant que responsable communication au sein d'une équipe de trois personnes pour Forum, j'ai géré la création de l'identité et la promotion de l'événement.",
-  technos: [
+    fullDescription: "Campagne de communication pour la toute première édition du Gala des Télécoms au Palais Brongniart, co-organisée par le Forum des Télécommunications et le BDE. En tant que responsable communication au sein d'une équipe de trois personnes pour Forum, j'ai géré la création de l'identité et la promotion de l'événement.",
+    technos: [
         { name: "Figma", icon : "figma.svg" },
         { name: "Photoshop", icon: "photoshop.svg" },
         { name : "DaVinci Resolve", icon: "davinci.svg" }
@@ -30,7 +30,32 @@ export const projects = [
       { 
         step: "Vidéos", 
         desc: "La stratégie vidéo s'est articulée autour de deux réalisations majeures. Nous avons d'abord diffusé un teaser pour lancer l'événement, puis un aftermovie pour proposer un retour en images sur la soirée.",
-        gallery: ["teaser-gala.mp4", "aftermovie-gala.mp4"]
+        gallery: ["https://www.youtube.com/watch?v=bBFiJ1ReMxs&pp=ygUSZ2FsYSB0ZWxlY29tIGZvcnVt", "https://www.youtube.com/watch?v=Hh6zK9JlhgE&pp=ygUSZ2FsYSB0ZWxlY29tIGZvcnVt"]
+      }
+    ]
+  },
+  {
+    id: "bikeandrun",
+    title: "Bike & Run",
+    logo: "BikeAndRun/bike-and-run.svg",
+    folder : "BikeAndRun/",
+    projetType: "Communication sportive & événementielle",
+    fullDescription: "Campagne de communication pour la deuxième édition du Bike and Run, un événement sportif organisé par le Forum des Télécommunications qui rassemble des professionnels d'entreprises et des étudiants en binômes. J'ai pris en charge la déclinaison graphique et la promotion de l'événement sur le campus.",
+    technos: [
+          { name: "Figma", icon : "figma.svg" },
+          { name: "Photoshop", icon: "photoshop.svg" },
+          { name : "DaVinci Resolve", icon: "davinci.svg" }
+      ],
+    planAction: [
+      { 
+        step: "Identité", 
+        desc: "Le logo étant déjà existant pour cette deuxième édition, nous avons créé un univers graphique mêlant le noir et blanc aux couleurs ddu logo.",
+        gallery: ["charte-graphique-bike-and-run.pdf"]
+      },
+      { 
+        step: "Supports", 
+        desc: "Nous avons communiqué auprès des étudiants pendant un mois via des affiches, des posts Instagram, des bannières et des photos de profil. Cette stratégie ciblée visait à encourager les inscriptions pour courir aux côtés des professionnels.",
+        gallery: ["support1.png", "support2.png", "post-insta.png", "banniere.png"]
       }
     ]
   },
