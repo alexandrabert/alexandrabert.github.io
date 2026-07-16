@@ -70,7 +70,7 @@ watch(
       </div>
     </nav>
 
-    <article class="max-w-4xl mx-auto px-6 py-20">
+    <article class="max-w-6xl mx-auto px-4 sm:px-6 py-20">
       <!-- HEADER -->
       <header class="mb-10">
         <h1 class="text-4xl md:text-7xl font-black mb-10 tracking-tighter text-slate-900 leading-tight">
@@ -131,17 +131,17 @@ watch(
               </button>
 
               <transition name="fade-slide">
-                <div v-if="openFolders.has(i)" class="mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-6 rounded-[2rem] bg-slate-100 shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff]">
+                <div v-if="openFolders.has(i)" class="mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 p-6 sm:p-8 rounded-[2rem] bg-slate-100 shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff]">
                   
                   <div v-for="(file, fileIdx) in step.gallery" :key="fileIdx" 
-                      class="mb-6 break-inside-avoid rounded-2xl p-2 bg-slate-100 shadow-[6px_6px_12px_#d1d5db,-6px_-6px_12px_#ffffff] transition-all duration-300 hover:shadow-[2px_2px_5px_#d1d5db,-2px_-2px_5px_#ffffff]">
+                      class="mb-6 break-inside-avoid rounded-2xl p-3 bg-slate-100 shadow-[6px_6px_12px_#d1d5db,-6px_-6px_12px_#ffffff] transition-all duration-300 hover:shadow-[2px_2px_5px_#d1d5db,-2px_-2px_5px_#ffffff]">
                     
                     <!-- CAS : IMAGE -->
                     <button v-if="isImage(file)" type="button" class="block w-full text-left" @click="openMedia(file)">
                       <div class="overflow-hidden rounded-xl bg-slate-200/80">
                         <img 
                           :src="'/' + project.folder + file" 
-                          class="block w-full h-auto max-h-[420px] object-contain mx-auto rounded-xl cursor-zoom-in transition-transform duration-700 hover:scale-105" 
+                          class="block w-full h-auto max-h-[680px] xl:max-h-[860px] object-contain mx-auto rounded-xl cursor-zoom-in transition-transform duration-700 hover:scale-105" 
                           alt="Document"
                           loading="lazy"
                         />
@@ -173,7 +173,7 @@ watch(
                       <div class="overflow-hidden rounded-xl border border-slate-200 bg-white">
                         <iframe
                           :src="'/' + project.folder + file"
-                          class="h-72 w-full"
+                          class="h-96 w-full"
                           title="Prévisualisation PDF"
                           loading="lazy"
                         />
