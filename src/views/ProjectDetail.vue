@@ -131,7 +131,7 @@ watch(
               </button>
 
               <transition name="fade-slide">
-                <div v-if="openFolders.has(i)" class="mt-8 columns-1 md:columns-2 xl:columns-3 gap-6 p-6 rounded-[2rem] bg-slate-100 shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff]">
+                <div v-if="openFolders.has(i)" class="mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-6 rounded-[2rem] bg-slate-100 shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff]">
                   
                   <div v-for="(file, fileIdx) in step.gallery" :key="fileIdx" 
                       class="mb-6 break-inside-avoid rounded-2xl p-2 bg-slate-100 shadow-[6px_6px_12px_#d1d5db,-6px_-6px_12px_#ffffff] transition-all duration-300 hover:shadow-[2px_2px_5px_#d1d5db,-2px_-2px_5px_#ffffff]">
