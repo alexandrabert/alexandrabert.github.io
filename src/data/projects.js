@@ -1,7 +1,30 @@
 // TODO
 // Trouver image pour tous les projets (gate, micloud, spotif'int, safe-int)
+// https://www.swisstransfer.com/d/24c43fb2-2926-456e-92b0-94bd31f20a00
 
 export const projects = [
+  {
+    id: "disclamer",
+    title: "Animation de logo",
+    logo: "Disclamer/intv.svg",
+    folder : "Disclamer/",
+    "princ-visual": "disclamer.png",
+    projetType: "Communication événementielle étudiante",
+    fullDescription: "Campagne de communication pour la toute première édition du Gala des Télécoms au Palais Brongniart, co-organisée par le Forum des Télécommunications et le BDE. En tant que responsable communication au sein d'une équipe de trois personnes pour Forum, j'ai géré la création de l'identité et la promotion de l'événement.",
+    technos: [
+      
+        { name : "DaVinci Resolve", icon: "davinci.svg" },
+        { name: "After Effect", icon: "ae.svg" },
+        { name: "Figma", icon : "figma.svg" }
+    ],
+    planAction: [
+      { 
+        step: "Animation", 
+        desc: "Dans le cadre de contenu vidéo pour le club INTv, j'ai réalisé des animations du logo. Ces animations mélange intégration sur After Effect et sur Davinci. J'ai adapté le logo sur Figma pour qu'il s'adapte au fond.",
+        gallery: ["disclamer.png"]
+      }
+    ]
+  },
   {
     id: "gala",
     title: "Gala des Télécoms",
@@ -24,7 +47,7 @@ export const projects = [
       { 
         step: "Charte graphique", 
         desc: "J'ai créée la charte graphique de cette édition première édition du Gala en accord avec les membres de l'équipe.",
-        gallery: ["charte-graphique-gala.pdf"]
+        gallery: ["charte-graphique-gala.png"]
       },
       { 
         step: "Supports de communication", 
@@ -55,7 +78,7 @@ export const projects = [
       { 
         step: "Identité", 
         desc: "Le logo étant déjà existant pour cette deuxième édition, nous avons créé un univers graphique mêlant le noir et blanc aux couleurs ddu logo.",
-        gallery: ["charte-graphique-bike-and-run.pdf"]
+        gallery: ["charte-graphique-bike-and-run.png"]
       },
       { 
         step: "Supports", 
@@ -69,7 +92,7 @@ export const projects = [
     title: "GATE - Part'âgé",
     logo: "GATE/gate.png",
     folder : "GATE/",
-    "princ-visual": "gate.png",
+    "princ-visual": "slide.png",
     projetType: "Projet d'engagement étudiant (2024-2025)",
     fullDescription: "Part'âgé est un projet GATE qui vise à donner des cours d'informatique élémentaire aux séniors de la ville d'Evry. L'objectif est de réduire la fracture numérique et de favoriser l'inclusion sociale des personnes âgées en leur permettant d'acquérir des compétences numériques de base.",
     technos: [
@@ -81,7 +104,7 @@ export const projects = [
       { 
         step: "Fiches récapitulatives", 
         desc: "J'ai conçu des fiches résumées pour chaque cours d'informatique afin d'aider les seniors à réviser facilement chez eux. Pour m'adapter au mieux à ce public, j'ai privilégié un format très visuel, épuré et simple à lire.",
-        gallery: ["fiche1.pdf", "fiche2.pdf", "fiche3.pdf"]
+        gallery: ["fiche1.png", "fiche2.png", "fiche3.png"]
       },
       { 
         step: "Support de soutenance", 
@@ -91,7 +114,7 @@ export const projects = [
       { 
         step: "Poster du projet", 
         desc: "J'ai également réalisé l'affiche final du projet Part'âge, un élément important qui comptait pour notre note finale. L'objectif était de proposer une affiche percutante pour promouvoir le projet.",
-        gallery: ["affiche.pdf"]
+        gallery: ["affiche.png"]
       }
     ]
   },
@@ -118,17 +141,17 @@ export const projects = [
       { 
         step: "Stratégie de communication", 
         desc: "J'ai structuré le planning de communication pour démarrer la diffusion un mois et demi avant l'événement, en prévoyant des supports variés comme du physique, du numérique et des goodies. J'ai également défini des échéances précises pour coordonner nos échanges avec l'école et les entreprises partenaires (intervenants).",
-        gallery: ["planning.pdf"]
+        gallery: ["planning.png"]
       },
       { 
         step: "Charte graphique et ses déclinaisons", 
         desc: "Une fois la direction artistique validée, j'ai mis en place la charte graphique avec le logo et les typographies. J'ai ensuite créé plusieurs icônes et affiches spécifiques pour illustrer les différents sous-thèmes de la souveraineté numérique.",
-        gallery: ["charte-graphique-micloud.pdf"]
+        gallery: ["charte-graphique-micloud.png"]
       },
       { 
         step: "Communication auprès des étudiants", 
         desc: "Nous avons lancé la communication auprès des étudiants de Télécom SudParis à l'aide de formats très divers : des 'Save the date', des posts Instagram, des bannières sur les bâtiments et des mails d'information. Pour créer une dynamique sur le campus, nous avons aussi partagé des photos de profil temporaires aux couleurs de l'événement.",
-        gallery: ["affiche1.png", "affiche2.png", "affiche3.png", "savethedate.mp4", "insta-micloud.png"]
+        gallery: ["affiche1.png", "affiche2.png", "affiche3.png", "affiche4.png", "savethedate.mp4", "insta-micloud.png"]
       },
       { 
         step: "Couverture le jour J", 
@@ -142,7 +165,7 @@ export const projects = [
     title: "Spotif'INT",
     logo: "SpotifINT/spotifint.svg",
     folder : "SpotifINT/",
-    "princ-visual": "diagramme-de-classe.png",
+    "princ-visual": "Image Sp.png",
     projetType: "Projet associatif et personnel pour l'association MiNET",
     fullDescription: "Développement d'une interface moderne pour l'écoute de musique créée sur le campus de l'IMT (Institut Mines-Télécom) avec gestion des playlists, like et vues et intégration de FastAPI. Application web inspirée de Spotify. Cette plateforme est la nouvelle version améliorée de l'ancien projet 'Spotif'INT', qui lisait des vidéo youtube via un système de liens.",
     technos: [
@@ -206,7 +229,7 @@ export const projects = [
   title: "Safe INT",
   folder : "SafeINT/",
   logo: "SafeINT/safeint.png",
-  "princ-visual": "dashboard.png",
+  "princ-visual": "Image Safe.png",
   projetType: "Projet scolaire dans le cadre du module \"Cassiopée\"",
   fullDescription: "Safe INT est une application de sécurité étudiante. Elle permet de gérer les situations d'urgence sur le campus. Avec un frontend en Flutter et un backend FastAPI complexe gérant des appels d'urgence, l'appli permet de faire des appels, du suivi GPS en temps réel et la gestion de lieux de refuge (Safe Places).",
   technos: [
