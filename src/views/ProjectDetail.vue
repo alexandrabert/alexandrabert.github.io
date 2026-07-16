@@ -1,11 +1,11 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { projects } from '../data/projects';
 import { ChevronLeft, Rocket, Folder, ChevronDown, FileText } from 'lucide-vue-next';
 
 const route = useRoute();
-const project = projects.find(p => p.id === route.params.id);
+const project = computed(() => projects.find(p => p.id === route.params.id));
 const openFolders = ref(new Set());
 const selectedMedia = ref(null);
 
@@ -32,7 +32,28 @@ const closeMedia = () => {
   selectedMedia.value = null;
 };
 
-onMounted(() => window.scrollTo(0, 0));
+const initializeOpenFolders = () => {
+  const steps = project.value?.planAction ?? [];
+  openFolders.value = new Set(
+    steps
+      .map((_, index) => index)
+      .filter((index) => Array.isArray(steps[index]?.gallery) && steps[index].gallery.length > 0)
+  );
+};
+
+onMounted(() => {
+  initializeOpenFolders();
+  window.scrollTo(0, 0);
+});
+
+watch(
+  () => route.params.id,
+  () => {
+    initializeOpenFolders();
+    selectedMedia.value = null;
+    window.scrollTo(0, 0);
+  }
+);
 </script>
 
 <template>
@@ -110,18 +131,19 @@ onMounted(() => window.scrollTo(0, 0));
               </button>
 
               <transition name="fade-slide">
-                <div v-if="openFolders.has(i)" class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6 p-6 rounded-[2rem] bg-slate-100 shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff]">
+                <div v-if="openFolders.has(i)" class="mt-8 columns-1 md:columns-2 xl:columns-3 gap-6 p-6 rounded-[2rem] bg-slate-100 shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff]">
                   
                   <div v-for="(file, fileIdx) in step.gallery" :key="fileIdx" 
-                      class="relative group rounded-2xl p-2 bg-slate-100 shadow-[6px_6px_12px_#d1d5db,-6px_-6px_12px_#ffffff] transition-all duration-300 hover:shadow-[2px_2px_5px_#d1d5db,-2px_-2px_5px_#ffffff]">
+                      class="mb-6 break-inside-avoid rounded-2xl p-2 bg-slate-100 shadow-[6px_6px_12px_#d1d5db,-6px_-6px_12px_#ffffff] transition-all duration-300 hover:shadow-[2px_2px_5px_#d1d5db,-2px_-2px_5px_#ffffff]">
                     
                     <!-- CAS : IMAGE -->
-                    <button v-if="isImage(file)" type="button" class="w-full" @click="openMedia(file)">
-                      <div class="aspect-video rounded-xl overflow-hidden bg-slate-200">
+                    <button v-if="isImage(file)" type="button" class="block w-full text-left" @click="openMedia(file)">
+                      <div class="overflow-hidden rounded-xl bg-slate-200/80">
                         <img 
                           :src="'/' + project.folder + file" 
-                          class="w-full h-full object-cover hover:scale-105 transition-transform duration-700 cursor-zoom-in" 
-                          alt="Document" 
+                          class="block w-full h-auto max-h-[420px] object-contain mx-auto rounded-xl cursor-zoom-in transition-transform duration-700 hover:scale-105" 
+                          alt="Document"
+                          loading="lazy"
                         />
                       </div>
                     </button>
@@ -147,21 +169,28 @@ onMounted(() => window.scrollTo(0, 0));
                     </div>
 
                     <!-- CAS : PDF -->
-                    <div v-else class="aspect-video rounded-xl flex flex-col items-center justify-center bg-slate-50 p-4">
-                      <div class="mb-3 p-3 rounded-full bg-slate-100 shadow-[4px_4px_8px_#d1d5db,-4px_-4px_8px_#ffffff]">
-                        <FileText class="w-8 h-8 text-red-400" />
+                    <div v-else class="rounded-xl bg-slate-50 p-3">
+                      <div class="overflow-hidden rounded-xl border border-slate-200 bg-white">
+                        <iframe
+                          :src="'/' + project.folder + file"
+                          class="h-72 w-full"
+                          title="Prévisualisation PDF"
+                          loading="lazy"
+                        />
                       </div>
-                      <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 truncate w-full text-center px-2">
-                        {{ file }}
-                      </span>
-                      <a 
-                        :href="'/' + project.folder + file" 
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="text-[11px] font-black uppercase tracking-tighter px-4 py-2 rounded-lg bg-slate-100 shadow-[3px_3px_6px_#d1d5db,-3px_-3px_6px_#ffffff] hover:text-blue-600 active:shadow-[inset_2px_2px_4px_#d1d5db] transition-all"
-                      >
-                        Ouvrir le PDF
-                      </a>
+                      <div class="mt-3 flex items-center justify-between gap-2">
+                        <span class="truncate text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                          {{ file }}
+                        </span>
+                        <a 
+                          :href="'/' + project.folder + file" 
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="shrink-0 rounded-lg bg-slate-100 px-3 py-2 text-[11px] font-black uppercase tracking-tighter text-slate-600 shadow-[3px_3px_6px_#d1d5db,-3px_-3px_6px_#ffffff] transition-all hover:text-blue-600 active:shadow-[inset_2px_2px_4px_#d1d5db]"
+                        >
+                          Ouvrir
+                        </a>
+                      </div>
                     </div>
 
                   </div>
@@ -192,7 +221,7 @@ onMounted(() => window.scrollTo(0, 0));
           <video
             v-else-if="isVideo(selectedMedia)"
             controls
-            autoplay
+            preload="metadata"
             class="max-h-[85vh] w-full object-contain bg-black"
           >
             <source :src="'/' + project.folder + selectedMedia" type="video/mp4" />

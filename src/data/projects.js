@@ -21,7 +21,7 @@ export const projects = [
       { 
         step: "Animation", 
         desc: "Dans le cadre de contenu vidéo pour le club INTv, j'ai réalisé des animations du logo. Ces animations mélange intégration sur After Effect et sur Davinci. J'ai adapté le logo sur Figma pour qu'il s'adapte au fond.",
-        gallery: ["disclamer.png"]
+        gallery: ["Disclamer1.mp4"]
       }
     ]
   },
