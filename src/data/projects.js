@@ -9,8 +9,8 @@ export const projects = [
     logo: "Disclamer/intv.svg",
     folder : "Disclamer/",
     "princ-visual": "disclamer.png",
-    projetType: "Communication événementielle étudiante",
-    fullDescription: "Campagne de communication pour la toute première édition du Gala des Télécoms au Palais Brongniart, co-organisée par le Forum des Télécommunications et le BDE. En tant que responsable communication au sein d'une équipe de trois personnes pour Forum, j'ai géré la création de l'identité et la promotion de l'événement.",
+    projetType: "Animation vidéo d'un logo",
+    fullDescription: "Dans le cadre de contenu vidéo pour le club INTv, j'ai réalisé des animations du logo. Ces animations mélange intégration sur After Effect et sur Davinci. J'ai adapté le logo sur Figma pour qu'il s'adapte au fond.",
     technos: [
       
         { name : "DaVinci Resolve", icon: "davinci.svg" },
@@ -20,7 +20,7 @@ export const projects = [
     planAction: [
       { 
         step: "Animation", 
-        desc: "Dans le cadre de contenu vidéo pour le club INTv, j'ai réalisé des animations du logo. Ces animations mélange intégration sur After Effect et sur Davinci. J'ai adapté le logo sur Figma pour qu'il s'adapte au fond.",
+        desc: "Voici l'une des animation que j'ai réalisé avec un style cyberpunk et electro.",
         gallery: ["Disclamer1.mp4"]
       }
     ]
