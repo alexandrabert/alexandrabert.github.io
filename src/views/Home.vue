@@ -17,8 +17,7 @@ const getProjectLogoPath = (project) => `/${project.logo}`
           Alexandra Bert
         </h1>
         <p class="text-lg text-slate-500 font-medium tracking-[0.2em] uppercase">
-          Développeuse Web, Mobile et Logiciels <br>
-          Graphisme et communication
+          Distributed Systems & Software Engineering Student
         </p>
       </header>
 
