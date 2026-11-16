@@ -2,7 +2,8 @@
 import { ref, onMounted, watch, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { projects } from '../data/projects';
-import { t, ui, toggleLang } from '../i18n';
+import { t, ui } from '../i18n';
+import LangSwitch from '../components/LangSwitch.vue';
 import { ChevronLeft, Rocket, Folder, ChevronDown } from 'lucide-vue-next';
 
 const route = useRoute();
@@ -59,7 +60,7 @@ watch(
 </script>
 
 <template>
-  <div v-if="project" class="min-h-screen bg-slate-100 font-sans antialiased text-slate-800">
+  <div v-if="project" class="min-h-screen font-sans antialiased text-slate-800">
     
     <!-- NAV NÉOMORPHIQUE -->
     <nav class="sticky top-6 z-50 max-w-4xl mx-auto px-4">
@@ -69,9 +70,7 @@ watch(
           {{ t(ui.backHome) }}
         </router-link>
         <span class="hidden sm:inline text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">{{ t(project.title) }}</span>
-        <button type="button" @click="toggleLang" class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-blue-600 transition-colors">
-          {{ t(ui.switchLang) }}
-        </button>
+        <LangSwitch />
       </div>
     </nav>
 
@@ -99,10 +98,25 @@ watch(
         <p class="text-xl md:text-xl text-slate-600 leading-relaxed font-medium">
           {{ t(project.fullDescription) }}
         </p>
+        <a
+          v-if="project.codeUrl"
+          :href="project.codeUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-6 inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-blue-600 text-white font-bold text-sm shadow-[6px_6px_12px_#bebebe,-6px_-6px_12px_#ffffff] hover:bg-blue-700 transition-colors"
+        >
+          {{ t(ui.viewCode) }} ↗
+        </a>
+        <p
+          v-else-if="project.codeNote"
+          class="mt-6 inline-block px-5 py-3 rounded-2xl bg-slate-100 text-slate-600 font-semibold shadow-[inset_4px_4px_8px_#d1d5db,inset_-4px_-4px_8px_#ffffff]"
+        >
+          🔒 {{ t(project.codeNote) }}
+        </p>
       </section>
 
       <!-- POINTS CLÉS -->
-      <section v-if="project.highlights?.length" class="mb-16 p-8 rounded-[2.5rem] shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff]">
+      <section v-if="project.highlights?.length" class="bg-slate-100 mb-16 p-8 rounded-[2.5rem] shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff]">
         <h2 class="text-xs font-black uppercase tracking-widest text-blue-500 mb-4">{{ t(ui.highlights) }}</h2>
         <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
           <li v-for="(item, k) in project.highlights" :key="k" class="flex gap-3 text-slate-700 font-medium text-lg">
@@ -248,8 +262,8 @@ watch(
   </div>
 
   <!-- PROJET INTROUVABLE -->
-  <div v-else class="min-h-screen bg-slate-100 font-sans antialiased text-slate-800 flex items-center justify-center px-6">
-    <div class="text-center p-10 rounded-[40px] shadow-[20px_20px_60px_#bebebe,-10px_-10px_40px_#ffffff] max-w-lg">
+  <div v-else class="min-h-screen font-sans antialiased text-slate-800 flex items-center justify-center px-6">
+    <div class="bg-slate-100 text-center p-10 rounded-[40px] shadow-[20px_20px_60px_#bebebe,-10px_-10px_40px_#ffffff] max-w-lg">
       <h1 class="text-4xl font-black text-slate-900 mb-4">{{ t(ui.notFoundTitle) }}</h1>
       <p class="text-slate-500 text-lg mb-8">{{ t(ui.notFoundText) }}</p>
       <router-link to="/" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-slate-100 font-bold text-slate-600 hover:text-blue-600 shadow-[6px_6px_12px_#bebebe,-6px_-6px_12px_#ffffff]">

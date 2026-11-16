@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+/* Fond : gris clair (slate-100) avec un large quadrillage léger (noir à 10 %) */
+html,
+body {
+  background-color: #f1f5f9;
+}
+
+body {
+  background-image:
+    linear-gradient(to right, rgb(0 0 0 / 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(0 0 0 / 0.1) 1px, transparent 1px);
+  background-size: 80px 80px;
+  background-position: center top;
+}

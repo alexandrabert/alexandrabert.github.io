@@ -2,13 +2,17 @@
 import { computed } from 'vue'
 import { projects } from '../data/projects'
 import { profile } from '../data/profile'
-import { t, ui, toggleLang } from '../i18n'
+import { t } from '../i18n'
+import LangSwitch from '../components/LangSwitch.vue'
 
 const sections = computed(() => ['dev', 'design'].map((key) => ({
   key,
   ...profile.sections[key],
   projects: projects.filter((p) => p.category === key)
 })))
+
+const codeLabel = { en: 'Source code available', fr: 'Code source disponible' }
+const privateLabel = { en: 'Private code · demo in interview', fr: 'Code privé · présentation en entretien' }
 
 const hasFeaturedVisual = (project) => Boolean(project['princ-visual']?.trim())
 const getProjectVisualPath = (project) => `/${project.folder}${project['princ-visual']}`
@@ -17,22 +21,16 @@ const getProjectLogoPath = (project) => `/${project.logo}`
 
 <template>
   <!-- Fond légèrement grisé indispensable pour le néomorphisme -->
-  <div class="min-h-screen bg-slate-100 font-sans antialiased text-slate-800 pb-20">
+  <div class="min-h-screen font-sans antialiased text-slate-800 pb-20">
 
     <div class="max-w-5xl mx-auto px-6 py-16">
       <!-- Bouton de langue -->
       <div class="flex justify-end mb-6">
-        <button
-          type="button"
-          @click="toggleLang"
-          class="px-4 py-2 rounded-xl bg-slate-100 shadow-[4px_4px_8px_#bebebe,-4px_-4px_8px_#ffffff] active:shadow-[inset_3px_3px_6px_#bebebe,inset_-3px_-3px_6px_#ffffff] text-xs font-bold uppercase tracking-widest text-slate-600 hover:text-blue-600 transition-colors"
-        >
-          {{ t(ui.switchLang) }}
-        </button>
+        <LangSwitch />
       </div>
 
       <!-- Header avec relief léger -->
-      <header class="text-center mb-14 p-8 md:p-10 rounded-[40px] shadow-[20px_20px_60px_#bebebe,-10px_-10px_40px_#ffffff]">
+      <header class="bg-slate-100 text-center mb-14 p-8 md:p-10 rounded-[40px] shadow-[20px_20px_60px_#bebebe,-10px_-10px_40px_#ffffff]">
         <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4 text-slate-900">
           {{ profile.name }}
         </h1>
@@ -71,13 +69,13 @@ const getProjectLogoPath = (project) => `/${project.logo}`
 
       <!-- À propos -->
       <section class="mb-20 grid grid-cols-1 md:grid-cols-5 gap-8">
-        <div class="md:col-span-3 p-8 rounded-[2.5rem] shadow-[inset_8px_8px_16px_#d1d5db,inset_-8px_-8px_16px_#ffffff]">
+        <div class="md:col-span-3 bg-slate-100 p-8 rounded-[2.5rem] shadow-[inset_8px_8px_16px_#d1d5db,inset_-8px_-8px_16px_#ffffff]">
           <h2 class="text-2xl font-black mb-4 text-slate-800">{{ t(profile.labels.about) }}</h2>
           <p v-for="(paragraph, i) in profile.about" :key="i" class="text-slate-600 text-lg leading-relaxed mb-3 last:mb-0">
             {{ t(paragraph) }}
           </p>
         </div>
-        <ul class="md:col-span-2 p-8 rounded-[2.5rem] shadow-[12px_12px_30px_#bebebe,-12px_-12px_30px_#ffffff] space-y-4">
+        <ul class="md:col-span-2 bg-slate-100 p-8 rounded-[2.5rem] shadow-[12px_12px_30px_#bebebe,-12px_-12px_30px_#ffffff] space-y-4">
           <li v-for="fact in profile.facts" :key="fact.label.en">
             <span class="block text-xs font-black uppercase tracking-widest text-blue-500">{{ t(fact.label) }}</span>
             <span class="text-slate-700 font-medium">{{ t(fact.value) }}</span>
@@ -140,6 +138,8 @@ const getProjectLogoPath = (project) => `/${project.logo}`
               <p class="text-slate-500 text-lg leading-relaxed mb-8 font-medium">
                 {{ t(project.shortDescription || project.projetType) }}
               </p>
+              <p v-if="project.codeUrl" class="-mt-5 mb-6 text-sm font-bold text-blue-600">{{ t(codeLabel) }} ↗</p>
+              <p v-else-if="project.codeNote" class="-mt-5 mb-6 text-sm font-semibold text-slate-400">{{ t(privateLabel) }}</p>
 
               <!-- Tech Badges (effet bouton néomorphique) -->
               <div class="flex flex-wrap gap-3">
@@ -157,7 +157,7 @@ const getProjectLogoPath = (project) => `/${project.logo}`
       </section>
 
       <!-- Contact -->
-      <footer class="text-center p-10 rounded-[40px] shadow-[inset_10px_10px_24px_#d1d5db,inset_-10px_-10px_24px_#ffffff]">
+      <footer class="bg-slate-100 text-center p-10 rounded-[40px] shadow-[inset_10px_10px_24px_#d1d5db,inset_-10px_-10px_24px_#ffffff]">
         <h2 class="text-3xl font-black text-slate-900 mb-3">{{ t(profile.contactTitle) }}</h2>
         <p class="text-slate-500 text-lg mb-6">{{ t(profile.contactText) }}</p>
         <div class="flex flex-wrap justify-center gap-4">

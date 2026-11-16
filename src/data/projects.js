@@ -12,6 +12,11 @@ export const projects = [
     logo: "SpotifINT/spotifint.svg",
     folder: "SpotifINT/",
     "princ-visual": "cover.webp",
+    // Code privé (projet pour l'école) : présenté en entretien
+    codeNote: {
+      en: "Private codebase (school project): I'd be happy to walk you through it in an interview.",
+      fr: "Code privé (projet pour l'école) : je peux le présenter en entretien."
+    },
     projetType: {
       en: "Solo project for the MiNET student network association",
       fr: "Projet personnel (en solo) pour l'association MiNET"
@@ -114,6 +119,7 @@ export const projects = [
     folder: "SafeINT/",
     logo: "SafeINT/safeint.png",
     "princ-visual": "cover.webp",
+    codeUrl: "https://gitlab.minet.net/safeint/safeint",
     projetType: {
       en: "Team project (4 students), Cassiopée module at Télécom SudParis",
       fr: "Projet d'équipe (4 étudiants), module Cassiopée à Télécom SudParis"
