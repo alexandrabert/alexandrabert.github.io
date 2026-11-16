@@ -125,12 +125,14 @@ watch(
           <h2 class="text-4xl font-black tracking-tight">{{ t(ui.actionPlan) }}</h2>
         </div>
 
-        <div class="space-y-16">
-          <div v-for="(step, i) in project.planAction" :key="i" class="relative pl-12">
+        <div class="space-y-10">
+          <div v-for="(step, i) in project.planAction" :key="i" class="relative pl-6 md:pl-12">
             <!-- Ligne de timeline (enfoncée) -->
             <div class="absolute left-0 top-0 bottom-0 w-2 bg-slate-100 shadow-[inset_2px_2px_4px_#bebebe,inset_-2px_-2px_4px_#ffffff] rounded-full"></div>
             
-            <div class="mb-8">
+            <!-- Bloc de l'étape : fond plein pour le détacher du quadrillage -->
+            <div class="bg-slate-100 rounded-[2rem] p-6 md:p-8 shadow-[12px_12px_30px_#bebebe,-12px_-12px_30px_#ffffff]">
+            <div :class="step.gallery?.length ? 'mb-8' : ''">
               <div class="flex flex-wrap items-center gap-3">
                 <span class="text-blue-500 font-black text-xs uppercase tracking-widest">{{ t(ui.step) }} {{ stepNumber(i) }}</span>
                 <span
@@ -222,6 +224,7 @@ watch(
                   </div>
                 </div>
               </transition>
+            </div>
             </div>
           </div>
         </div>
