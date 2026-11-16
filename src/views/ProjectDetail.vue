@@ -3,7 +3,7 @@ import { ref, onMounted, watch, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { projects } from '../data/projects';
 import { t, ui } from '../i18n';
-import LangSwitch from '../components/LangSwitch.vue';
+import NavBar from '../components/NavBar.vue';
 import { ChevronLeft, Rocket, Folder, ChevronDown } from 'lucide-vue-next';
 
 const route = useRoute();
@@ -62,17 +62,7 @@ watch(
 <template>
   <div v-if="project" class="min-h-screen font-sans antialiased text-slate-800">
     
-    <!-- NAV NÉOMORPHIQUE -->
-    <nav class="sticky top-6 z-50 max-w-4xl mx-auto px-4">
-      <div class="bg-slate-100/80 backdrop-blur-lg px-6 py-4 rounded-3xl shadow-[10px_10px_20px_#bebebe,-10px_-10px_20px_#ffffff] flex justify-between items-center border border-white/20">
-        <router-link to="/" class="flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors font-bold text-sm uppercase tracking-tighter">
-          <ChevronLeft class="w-5 h-5" />
-          {{ t(ui.backHome) }}
-        </router-link>
-        <span class="hidden sm:inline text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">{{ t(project.title) }}</span>
-        <LangSwitch />
-      </div>
-    </nav>
+    <NavBar />
 
     <article class="max-w-6xl mx-auto px-4 sm:px-6 py-20">
       <!-- HEADER -->
@@ -141,7 +131,14 @@ watch(
             <div class="absolute left-0 top-0 bottom-0 w-2 bg-slate-100 shadow-[inset_2px_2px_4px_#bebebe,inset_-2px_-2px_4px_#ffffff] rounded-full"></div>
             
             <div class="mb-8">
-              <span class="text-blue-500 font-black text-xs uppercase tracking-widest">{{ t(ui.step) }} {{ stepNumber(i) }}</span>
+              <div class="flex flex-wrap items-center gap-3">
+                <span class="text-blue-500 font-black text-xs uppercase tracking-widest">{{ t(ui.step) }} {{ stepNumber(i) }}</span>
+                <span
+                  v-if="step.owner"
+                  class="px-2.5 py-1 rounded-lg text-[11px] font-black uppercase tracking-wider"
+                  :class="step.owner === 'me' ? 'bg-blue-100 text-blue-700' : 'bg-slate-200 text-slate-600'"
+                >{{ step.owner === 'me' ? t(ui.myWork) : t(ui.teamWork) }}</span>
+              </div>
               <h3 class="text-2xl font-bold text-slate-800 mt-2">{{ t(step.step) }}</h3>
               <p class="text-slate-500 mt-4 text-lg leading-relaxed">{{ t(step.desc) }}</p>
             </div>

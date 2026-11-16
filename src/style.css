@@ -10,6 +10,6 @@ body {
   background-image:
     linear-gradient(to right, rgb(0 0 0 / 0.1) 1px, transparent 1px),
     linear-gradient(to bottom, rgb(0 0 0 / 0.1) 1px, transparent 1px);
-  background-size: 80px 80px;
+  background-size: 160px 160px;
   background-position: center top;
 }

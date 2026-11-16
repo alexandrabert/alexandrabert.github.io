@@ -12,6 +12,8 @@ export const projects = [
     logo: "SpotifINT/spotifint.svg",
     folder: "SpotifINT/",
     "princ-visual": "cover.webp",
+    dates: "2025 - 2026",
+    badge: { en: "Solo project", fr: "Projet solo" },
     // Code privé (projet pour l'école) : présenté en entretien
     codeNote: {
       en: "Private codebase (school project): I'd be happy to walk you through it in an interview.",
@@ -22,18 +24,18 @@ export const projects = [
       fr: "Projet personnel (en solo) pour l'association MiNET"
     },
     shortDescription: {
-      en: "Music streaming web app for the campus: FastAPI backend, Vue.js frontend, moderation dashboard.",
-      fr: "Application web d'écoute de musique pour le campus : backend FastAPI, frontend Vue.js, dashboard de modération."
+      en: "Music streaming web app for the campus: FastAPI backend with server-side MP3 streaming, Vue.js frontend.",
+      fr: "Application web d'écoute de musique pour le campus : backend FastAPI avec streaming MP3 côté serveur, frontend Vue.js."
     },
     fullDescription: {
-      en: "A modern music listening platform for the IMT (Institut Mines-Télécom) campus, inspired by Spotify: playlists, likes, view counts and a FastAPI backend. It is a complete rebuild of the original Spotif'INT, which only played YouTube videos through links.",
-      fr: "Développement d'une interface moderne pour l'écoute de musique créée sur le campus de l'IMT (Institut Mines-Télécom), avec gestion des playlists, likes et vues, et intégration de FastAPI. Application web inspirée de Spotify. Cette plateforme est la nouvelle version améliorée de l'ancien projet Spotif'INT, qui lisait des vidéos YouTube via un système de liens."
+      en: "A modern music streaming platform for the IMT (Institut Mines-Télécom) campus, inspired by Spotify. Tracks are added either from YouTube links, converted to MP3 on the server, or by uploading MP3 files directly, then streamed by the backend. It is a complete rebuild of the original Spotif'INT, which only played YouTube videos through links.",
+      fr: "Plateforme moderne d'écoute de musique pour le campus de l'IMT (Institut Mines-Télécom), inspirée de Spotify. Les titres sont ajoutés soit à partir de liens YouTube, convertis en MP3 sur le serveur, soit par envoi direct de fichiers MP3, puis diffusés en streaming par le backend. C'est une refonte complète de l'ancien Spotif'INT, qui se contentait de lire des vidéos YouTube via des liens."
     },
     highlights: [
       { en: "Solo project: UX/UI, frontend, backend and database", fr: "Projet en solo : UX/UI, frontend, backend et base de données" },
-      { en: "REST API in FastAPI with a SQLite database", fr: "API REST en FastAPI avec une base SQLite" },
-      { en: "Student login through MiNET's Keycloak", fr: "Connexion des étudiants via le Keycloak de MiNET" },
-      { en: "Moderation dashboard and anti-spam likes", fr: "Dashboard de modération et likes anti-spam" }
+      { en: "Backend in FastAPI / SQLite: server-side MP3 streaming, playlists, track upload", fr: "Backend FastAPI / SQLite : streaming MP3 côté serveur, playlists, envoi de titres" },
+      { en: "Tracks added from YouTube links (converted to MP3) or MP3 files", fr: "Ajout de titres par lien YouTube (converti en MP3) ou fichier MP3" },
+      { en: "User accounts linked to the MiNET association, secured network access", fr: "Comptes liés à l'association MiNET, accès réseau sécurisé" }
     ],
     technos: [
       { name: "Vue.js", icon: "vue.svg" },
@@ -61,8 +63,8 @@ export const projects = [
       {
         step: { en: "Frontend with Vue.js and TailwindCSS", fr: "Création du frontend avec Vue.js et TailwindCSS" },
         desc: {
-          en: "User interface built with Vue.js and TailwindCSS, Lucide icons and reusable components. Playback logic with state management (play, pause, next, previous), first tested on a sample database.",
-          fr: "Développement de l'interface utilisateur avec Vue.js et TailwindCSS. Utilisation de Lucide icons et de composants réutilisables. Intégration d'une logique de lecture musicale avec gestion des états (play, pause, next, previous). Utilisation d'une base de données test."
+          en: "Responsive interface built with Vue.js and TailwindCSS, Lucide icons and reusable components. Playback logic with state management (play, pause, next, previous), first tested on a sample database.",
+          fr: "Interface responsive développée avec Vue.js et TailwindCSS, Lucide icons et des composants réutilisables. Logique de lecture avec gestion des états (play, pause, next, previous), d'abord testée sur une base de données test."
         },
         gallery: ["mobile-frontend.pdf", "desktop-frontend.pdf"]
       },
@@ -70,44 +72,44 @@ export const projects = [
         step: { en: "Hierarchical architecture and database", fr: "Architecture hiérarchique et BDD" },
         desc: {
           en: "A recursive data structure (Association > Club > List) to manage permissions and resources. Database model in SQLite, with playlists and liked tracks.",
-          fr: "Développement d'une structure de données récursive (Asso > Club > Liste) pour la gestion des droits et des ressources. Création du modèle de BDD avec SQLite. Ajout des playlists et des titres likés."
+          fr: "Structure de données récursive (Asso > Club > Liste) pour la gestion des droits et des ressources. Modèle de BDD en SQLite, avec les playlists et les titres likés."
         },
         gallery: ["diagramme-de-classe.webp"]
       },
       {
-        step: { en: "YouTube link ingestion pipeline", fr: "Pipeline de téléchargement des liens YouTube" },
+        step: { en: "Adding tracks: YouTube links or MP3 files", fr: "Ajout de titres : liens YouTube ou fichiers MP3" },
         desc: {
-          en: "Tracks are added automatically from YouTube links. Metadata handling with a fallback: when no cover is provided, the logo of the parent entity (association or campaign team) is used.",
-          fr: "Automatisation de l'ajout de titres via liens YouTube. Gestion intelligente des métadonnées avec système de « fallback » : si aucune couverture n'est fournie, c'est le logo de l'entité parente (Asso/Mandat) qui est appliqué."
+          en: "Users add a track either by pasting a YouTube link, which the server downloads and converts to MP3, or by uploading an MP3 file. Metadata handling with a fallback: when no cover is provided, the logo of the parent entity (association or campaign team) is used.",
+          fr: "Un titre s'ajoute soit en collant un lien YouTube, que le serveur télécharge et convertit en MP3, soit en envoyant directement un fichier MP3. Gestion des métadonnées avec un « fallback » : si aucune couverture n'est fournie, c'est le logo de l'entité parente (Asso/Mandat) qui est utilisé."
+        }
+      },
+      {
+        step: { en: "Server-side MP3 streaming", fr: "Streaming MP3 côté serveur" },
+        desc: {
+          en: "The FastAPI backend stores the MP3 files and streams them to the player, alongside the REST API for tracks, playlists and likes.",
+          fr: "Le backend FastAPI stocke les fichiers MP3 et les diffuse en streaming vers le lecteur, en plus de l'API REST pour les titres, les playlists et les likes."
         }
       },
       {
         step: { en: "Admin and moderation dashboard", fr: "Dashboard d'administration et modération" },
         desc: {
           en: "A control panel for student life: approve, edit or hide tracks submitted by users, with dynamic priorities during campaign events.",
-          fr: "Création d'un panneau de contrôle pour la vie associative. Permet la validation, la modification et le masquage des titres soumis par les utilisateurs, avec une gestion dynamique des priorités pour les événements de campagne."
+          fr: "Panneau de contrôle pour la vie associative : validation, modification et masquage des titres soumis par les utilisateurs, avec une gestion dynamique des priorités pendant les campagnes."
         },
         gallery: ["admin_moderation_view.pdf"]
       },
       {
-        step: { en: "Playlists and engagement", fr: "Système de playlists et engagement" },
+        step: { en: "Playlists and engagement", fr: "Playlists et engagement" },
         desc: {
-          en: "A secure 'Like' system (anti-spam: one like per user per track), combined with automatic addition to personal playlists to drive engagement.",
-          fr: "Implémentation d'un système de « Like » sécurisé (anti-spam : limite à 1 like par utilisateur et par titre) couplé à une fonctionnalité d'ajout automatique aux playlists personnelles pour favoriser l'engagement."
+          en: "A secure 'Like' system (anti-spam: one like per user per track), combined with automatic addition to personal playlists.",
+          fr: "Système de « Like » sécurisé (anti-spam : 1 like par utilisateur et par titre) couplé à l'ajout automatique aux playlists personnelles."
         }
       },
       {
-        step: { en: "Backend development", fr: "Développement backend" },
+        step: { en: "Accounts and security", fr: "Comptes et sécurité" },
         desc: {
-          en: "REST API with FastAPI and SQLite database management.",
-          fr: "Mise en place de FastAPI et gestion de la base de données SQLite."
-        }
-      },
-      {
-        step: { en: "Security", fr: "Sécurisation" },
-        desc: {
-          en: "Student authentication through the MiNET association's Keycloak.",
-          fr: "Authentification des étudiants via le système Keycloak de l'association MiNET."
+          en: "User accounts linked to the MiNET student network association, with secured network access.",
+          fr: "Comptes utilisateurs liés à l'association MiNET, avec un accès réseau sécurisé."
         }
       }
     ]
@@ -119,81 +121,83 @@ export const projects = [
     folder: "SafeINT/",
     logo: "SafeINT/safeint.png",
     "princ-visual": "cover.webp",
+    dates: "2025 - 2026",
+    badge: { en: "Team of 4 · PM & UX", fr: "Équipe de 4 · Chef de projet & UX" },
     codeUrl: "https://gitlab.minet.net/safeint/safeint",
     projetType: {
-      en: "Team project (4 students), Cassiopée module at Télécom SudParis",
-      fr: "Projet d'équipe (4 étudiants), module Cassiopée à Télécom SudParis"
+      en: "Team project (4 students), Cassiopée project at Télécom SudParis",
+      fr: "Projet d'équipe (4 étudiants), projet Cassiopée à Télécom SudParis"
     },
     shortDescription: {
-      en: "Campus safety mobile app: real-time geolocated alerts, FastAPI backend, monitoring dashboard.",
-      fr: "Application mobile de sécurité pour le campus : alertes géolocalisées en temps réel, backend FastAPI, dashboard de suivi."
+      en: "Campus safety mobile app with real-time geolocated alerts. My role: Figma mockups, project management, monitoring dashboard.",
+      fr: "Application mobile de sécurité du campus avec alertes géolocalisées en temps réel. Mon rôle : maquettes Figma, gestion de projet, dashboard de suivi."
     },
     fullDescription: {
-      en: "Safe'INT is a student safety application that handles emergencies on campus. A Flutter frontend and a FastAPI backend manage emergency calls, real-time GPS tracking and a directory of refuge locations (Safe Places).",
-      fr: "Safe'INT est une application de sécurité étudiante. Elle permet de gérer les situations d'urgence sur le campus. Avec un frontend en Flutter et un backend FastAPI gérant les appels d'urgence, l'appli permet de passer des appels, de faire du suivi GPS en temps réel et de gérer des lieux de refuge (Safe Places)."
+      en: "Safe'INT is a campus safety mobile application. Students can raise an alert and be located in real time on an interactive map, so that help reaches them quickly. The backend is a REST API in Python / FastAPI with a SQLite database and push notifications; the frontend uses Vue.js and Flutter.",
+      fr: "Safe'INT est une application mobile de sécurité pour le campus. Un étudiant peut lancer une alerte et être localisé en temps réel sur une carte interactive, pour que l'aide arrive vite. Le backend est une API REST en Python / FastAPI avec une base SQLite et des notifications push ; le frontend utilise Vue.js et Flutter."
     },
     highlights: [
-      { en: "My role: all app mockups in Figma, project management and the monitoring dashboard", fr: "Mon rôle : toutes les maquettes de l'app sur Figma, la gestion de projet et le dashboard de suivi" },
-      { en: "REST API in FastAPI with real-time geolocated alerts", fr: "API REST en FastAPI avec alertes géolocalisées en temps réel" },
-      { en: "Locking so that only one helper answers each alert", fr: "Verrou pour qu'un seul aidant réponde à chaque alerte" },
-      { en: "CI/CD pipeline running on every push", fr: "Pipeline CI/CD lancé à chaque push" }
+      { en: "I designed all the app mockups in Figma", fr: "J'ai conçu toutes les maquettes de l'app sur Figma" },
+      { en: "I managed the project for the team of 4", fr: "J'ai géré le projet pour l'équipe de 4" },
+      { en: "I built the monitoring dashboard to collect data and verify the system", fr: "J'ai développé le dashboard de suivi pour collecter les données et vérifier le système" },
+      { en: "Team: FastAPI REST API, SQLite, push notifications, CI/CD on every push", fr: "Équipe : API REST FastAPI, SQLite, notifications push, CI/CD à chaque push" }
     ],
     technos: [
-      { name: "Flutter", icon: "flutter.svg" },
+      { name: "Figma", icon: "figma.svg" },
       { name: "FastAPI", icon: "fastapi.svg" },
-      { name: "PostgreSQL", icon: "postgresql.svg" },
-      { name: "Pydantic", icon: "pydantic.svg" },
-      { name: "Figma", icon: "figma.svg" }
+      { name: "SQLite", icon: "sqlite.svg" },
+      { name: "Vue.js", icon: "vue.svg" },
+      { name: "Flutter", icon: "flutter.svg" }
     ],
     planAction: [
       {
-        step: { en: "Architecture and data modelling", fr: "Architecture et modélisation" },
-        desc: {
-          en: "Pydantic schemas to create and read users, with activity tracking (last_seen).",
-          fr: "Définition des schémas Pydantic pour la création et la lecture d'utilisateurs avec suivi d'activité (last_seen)."
-        }
-      },
-      {
+        owner: "me",
         step: { en: "UI/UX design in Figma", fr: "Conception UI/UX sur Figma" },
         desc: {
-          en: "A 'safety-first' interface: clean and reassuring, with large, accessible emergency buttons for stressful situations. I worked on the user flow, from opening the app to triggering an alert, and designed all the mockups.",
-          fr: "Création d'une interface « Safety-first ». L'enjeu était de concevoir un design épuré et rassurant, avec des boutons d'urgence larges et accessibles pour des situations de stress. Travail sur le parcours utilisateur : de l'ouverture de l'app au déclenchement d'une alerte. J'ai réalisé toutes les maquettes."
+          en: "I designed all the app mockups. A 'safety-first' interface: clean and reassuring, with large, accessible emergency buttons for stressful situations. I worked on the user flow, from opening the app to triggering an alert.",
+          fr: "J'ai conçu toutes les maquettes de l'app. Une interface « Safety-first » : épurée et rassurante, avec des boutons d'urgence larges et accessibles pour les situations de stress. J'ai travaillé le parcours utilisateur, de l'ouverture de l'app au déclenchement d'une alerte."
         },
-        gallery: ["mobile-maquette.pdf", "dashboard.png"]
+        gallery: ["mobile-maquette.pdf"]
       },
       {
-        step: { en: "Real-time assistance hub", fr: "Hub d'assistance en temps réel" },
-        desc: {
-          en: "Emergency call and geolocation modules, with live position tracking (latitude / longitude).",
-          fr: "Développement des modules d'appels et de géolocalisation d'urgence avec suivi dynamique des positions (lat/long)."
-        }
-      },
-      {
-        step: { en: "Concurrency handling", fr: "Gestion de la concurrence" },
-        desc: {
-          en: "A lock on incidents guarantees that only one helper responds to a given alert.",
-          fr: "Implémentation d'un système de verrou sur les incidents pour garantir qu'un seul aidant réponde à une alerte."
-        }
-      },
-      {
-        step: { en: "Safe Places module", fr: "Module Safe Places" },
-        desc: {
-          en: "A directory of safe refuge locations, with a validation process by users.",
-          fr: "Création d'un répertoire de lieux de refuge sécurisés avec processus de validation par l'utilisateur."
-        }
-      },
-      {
-        step: { en: "Admin dashboard and data visualisation", fr: "Dashboard d'administration et data viz" },
-        desc: {
-          en: "A monitoring interface for campus security teams: incidents shown on a real-time interactive map, and statistics such as call peaks per hour and the most frequent incident types.",
-          fr: "Conception d'une interface de suivi pour les équipes de sécurité du campus. Agrégation des données d'incidents pour affichage sur une carte interactive en temps réel et génération de graphiques statistiques (pics d'appels par heure, types d'incidents les plus fréquents)."
-        }
-      },
-      {
+        owner: "me",
         step: { en: "Project management", fr: "Gestion de projet" },
         desc: {
-          en: "I coordinated the team of four throughout the project, with a CI/CD pipeline running on every push.",
-          fr: "J'ai coordonné l'équipe de quatre tout au long du projet, avec un pipeline CI/CD lancé à chaque push."
+          en: "I managed the project and coordinated the team of four through to the final delivery.",
+          fr: "J'ai géré le projet et coordonné l'équipe de quatre jusqu'à la livraison finale."
+        }
+      },
+      {
+        owner: "me",
+        step: { en: "Monitoring dashboard", fr: "Dashboard de suivi" },
+        desc: {
+          en: "I built the monitoring dashboard, which collects the system's data so we could verify that it works correctly.",
+          fr: "J'ai développé le dashboard de suivi, qui collecte les données du système pour vérifier son bon fonctionnement."
+        },
+        gallery: ["dashboard.png"]
+      },
+      {
+        owner: "team",
+        step: { en: "Backend: REST API in Python / FastAPI", fr: "Backend : API REST en Python / FastAPI" },
+        desc: {
+          en: "A REST API in FastAPI handles users, alerts and positions, with a SQLite database and push notifications to warn helpers.",
+          fr: "Une API REST en FastAPI gère les utilisateurs, les alertes et les positions, avec une base SQLite et des notifications push pour prévenir les aidants."
+        }
+      },
+      {
+        owner: "team",
+        step: { en: "Interactive map and real-time geolocated alerts", fr: "Carte interactive et alertes géolocalisées en temps réel" },
+        desc: {
+          en: "The app (Vue.js / Flutter) shows an interactive map and follows the position of the person who raised the alert in real time.",
+          fr: "L'app (Vue.js / Flutter) affiche une carte interactive et suit en temps réel la position de la personne qui a lancé l'alerte."
+        }
+      },
+      {
+        owner: "team",
+        step: { en: "CI/CD", fr: "CI/CD" },
+        desc: {
+          en: "A CI/CD pipeline runs on every push to the repository.",
+          fr: "Un pipeline CI/CD s'exécute à chaque push sur le dépôt."
         }
       }
     ]

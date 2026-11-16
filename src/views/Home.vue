@@ -1,15 +1,35 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, nextTick } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { projects } from '../data/projects'
+import { experiences, leadership } from '../data/experience'
+import NavBar from '../components/NavBar.vue'
 import { profile } from '../data/profile'
 import { t } from '../i18n'
-import LangSwitch from '../components/LangSwitch.vue'
 
 const sections = computed(() => ['dev', 'design'].map((key) => ({
   key,
   ...profile.sections[key],
   projects: projects.filter((p) => p.category === key)
 })))
+
+const route = useRoute()
+const router = useRouter()
+
+// Arrivée depuis le menu d'une page projet
+onMounted(async () => {
+  const section = route.query.section
+  if (typeof section === 'string') {
+    // Le défilement est fait par le routeur ; on retire ensuite le paramètre de l'URL
+    await nextTick()
+    setTimeout(() => router.replace({ path: '/', query: {} }), 1500)
+  }
+})
+
+const expTitle = { en: 'Experience', fr: 'Expériences' }
+const expSubtitle = { en: 'Internships and jobs, most recent first', fr: 'Stages et emplois, du plus récent au plus ancien' }
+const kindLabel = { tech: { en: 'Tech', fr: 'Tech' }, comm: { en: 'Communication', fr: 'Communication' } }
+const leadershipLabel = { en: 'Student leadership', fr: 'Engagement associatif' }
 
 const codeLabel = { en: 'Source code available', fr: 'Code source disponible' }
 const privateLabel = { en: 'Private code · demo in interview', fr: 'Code privé · présentation en entretien' }
@@ -23,11 +43,9 @@ const getProjectLogoPath = (project) => `/${project.logo}`
   <!-- Fond légèrement grisé indispensable pour le néomorphisme -->
   <div class="min-h-screen font-sans antialiased text-slate-800 pb-20">
 
-    <div class="max-w-5xl mx-auto px-6 py-16">
-      <!-- Bouton de langue -->
-      <div class="flex justify-end mb-6">
-        <LangSwitch />
-      </div>
+    <NavBar />
+
+    <div class="max-w-5xl mx-auto px-6 pt-12 pb-16">
 
       <!-- Header avec relief léger -->
       <header class="bg-slate-100 text-center mb-14 p-8 md:p-10 rounded-[40px] shadow-[20px_20px_60px_#bebebe,-10px_-10px_40px_#ffffff]">
@@ -83,7 +101,64 @@ const getProjectLogoPath = (project) => `/${project.logo}`
         </ul>
       </section>
 
+      <!-- Expériences -->
+      <section id="experience" class="mb-20 scroll-mt-28">
+        <div class="mb-10">
+          <h2 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900">{{ t(expTitle) }}</h2>
+          <p class="text-slate-500 text-lg font-medium mt-2">{{ t(expSubtitle) }}</p>
+        </div>
+
+        <ol class="space-y-8">
+          <li
+            v-for="exp in experiences"
+            :key="exp.id"
+            class="bg-slate-100 p-6 md:p-8 rounded-[2rem] shadow-[12px_12px_30px_#bebebe,-12px_-12px_30px_#ffffff]"
+          >
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
+              <div>
+                <h3 class="text-xl md:text-2xl font-black text-slate-800">{{ t(exp.role) }}</h3>
+                <p class="text-blue-600 font-bold">{{ exp.company }}</p>
+              </div>
+              <div class="flex items-center gap-3 shrink-0">
+                <span
+                  class="px-3 py-1 rounded-lg text-[11px] font-black uppercase tracking-widest"
+                  :class="exp.kind === 'tech' ? 'bg-blue-100 text-blue-700' : 'bg-slate-200 text-slate-600'"
+                >{{ t(kindLabel[exp.kind]) }}</span>
+                <span class="text-sm font-bold text-slate-500 whitespace-nowrap">{{ t(exp.dates) }}</span>
+              </div>
+            </div>
+            <ul class="space-y-2 mb-5">
+              <li v-for="(b, k) in exp.bullets" :key="k" class="flex gap-3 text-slate-600 text-base md:text-lg leading-relaxed">
+                <span class="mt-2.5 w-1.5 h-1.5 shrink-0 rounded-full bg-blue-500"></span>
+                <span>{{ t(b) }}</span>
+              </li>
+            </ul>
+            <div class="flex flex-wrap gap-2">
+              <span
+                v-for="tag in exp.tags"
+                :key="tag"
+                class="px-3 py-1.5 rounded-xl bg-slate-100 shadow-[3px_3px_6px_#bebebe,-3px_-3px_6px_#ffffff] text-xs font-bold text-slate-600"
+              >{{ tag }}</span>
+            </div>
+          </li>
+
+          <!-- Engagement associatif -->
+          <li class="bg-slate-100 p-6 md:p-8 rounded-[2rem] shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff]">
+            <span class="block text-xs font-black uppercase tracking-widest text-blue-500 mb-2">{{ t(leadershipLabel) }}</span>
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-3">
+              <div>
+                <h3 class="text-lg md:text-xl font-black text-slate-800">{{ t(leadership.role) }}</h3>
+                <p class="text-slate-500 font-semibold">{{ t(leadership.company) }}</p>
+              </div>
+              <span class="text-sm font-bold text-slate-500 whitespace-nowrap">{{ t(leadership.dates) }}</span>
+            </div>
+            <p v-for="(b, k) in leadership.bullets" :key="k" class="text-slate-600 text-base md:text-lg leading-relaxed">{{ t(b) }}</p>
+          </li>
+        </ol>
+      </section>
+
       <!-- Projets, par catégorie -->
+      <div id="projects" class="scroll-mt-28">
       <section v-for="section in sections" :key="section.key" class="mb-20">
         <div class="mb-10">
           <h2 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900">{{ t(section.title) }}</h2>
@@ -132,6 +207,10 @@ const getProjectLogoPath = (project) => `/${project.logo}`
 
             <!-- Content -->
             <div class="px-6 pb-6">
+              <div v-if="project.dates || project.badge" class="flex flex-wrap items-center gap-2 mb-3">
+                <span v-if="project.dates" class="text-xs font-black uppercase tracking-widest text-slate-500">{{ project.dates }}</span>
+                <span v-if="project.badge" class="px-2.5 py-1 rounded-lg bg-blue-100 text-blue-700 text-[11px] font-black uppercase tracking-wider">{{ t(project.badge) }}</span>
+              </div>
               <h3 class="text-3xl font-black mb-3 text-slate-800 group-hover:text-blue-600 transition-colors">
                 {{ t(project.title) }}
               </h3>
@@ -156,8 +235,10 @@ const getProjectLogoPath = (project) => `/${project.logo}`
         </div>
       </section>
 
+      </div>
+
       <!-- Contact -->
-      <footer class="bg-slate-100 text-center p-10 rounded-[40px] shadow-[inset_10px_10px_24px_#d1d5db,inset_-10px_-10px_24px_#ffffff]">
+      <footer id="contact" class="scroll-mt-28 bg-slate-100 text-center p-10 rounded-[40px] shadow-[inset_10px_10px_24px_#d1d5db,inset_-10px_-10px_24px_#ffffff]">
         <h2 class="text-3xl font-black text-slate-900 mb-3">{{ t(profile.contactTitle) }}</h2>
         <p class="text-slate-500 text-lg mb-6">{{ t(profile.contactText) }}</p>
         <div class="flex flex-wrap justify-center gap-4">

@@ -49,6 +49,8 @@ export const ui = {
   notFoundText: { en: 'This project does not exist or has moved.', fr: "Ce projet n'existe pas ou a été déplacé." },
   seeProjects: { en: 'See all projects', fr: 'Voir tous les projets' },
   close: { en: 'Close', fr: 'Fermer' },
+  myWork: { en: 'My work', fr: 'Mon travail' },
+  teamWork: { en: 'Team work', fr: "Travail d'équipe" },
   viewCode: { en: 'View the source code on GitLab', fr: 'Voir le code source sur GitLab' },
   switchLang: { en: 'Passer en français', fr: 'Switch to English' }
 }
