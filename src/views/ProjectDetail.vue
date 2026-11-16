@@ -2,7 +2,8 @@
 import { ref, onMounted, watch, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { projects } from '../data/projects';
-import { ChevronLeft, Rocket, Folder, ChevronDown, FileText } from 'lucide-vue-next';
+import { t, ui, toggleLang } from '../i18n';
+import { ChevronLeft, Rocket, Folder, ChevronDown } from 'lucide-vue-next';
 
 const route = useRoute();
 const project = computed(() => projects.find(p => p.id === route.params.id));
@@ -14,7 +15,8 @@ const toggleFolder = (index) => {
   else openFolders.value.add(index);
 };
 
-const isImage = (filename) => /\.(png|jpe?g)$/i.test(filename);
+const isImage = (filename) => /\.(png|jpe?g|webp|gif|svg)$/i.test(filename);
+const stepNumber = (i) => String(i + 1).padStart(2, '0');
 const isVideo = (filename) => /\.mp4$/i.test(filename);
 const isYouTube = (filename) => /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\//i.test(filename);
 const isPDF = (filename) => filename.toLowerCase().endsWith('.pdf');
@@ -64,9 +66,12 @@ watch(
       <div class="bg-slate-100/80 backdrop-blur-lg px-6 py-4 rounded-3xl shadow-[10px_10px_20px_#bebebe,-10px_-10px_20px_#ffffff] flex justify-between items-center border border-white/20">
         <router-link to="/" class="flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors font-bold text-sm uppercase tracking-tighter">
           <ChevronLeft class="w-5 h-5" />
-          Retour
+          {{ t(ui.backHome) }}
         </router-link>
-        <span class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">{{ project.title }}</span>
+        <span class="hidden sm:inline text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">{{ t(project.title) }}</span>
+        <button type="button" @click="toggleLang" class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-blue-600 transition-colors">
+          {{ t(ui.switchLang) }}
+        </button>
       </div>
     </nav>
 
@@ -74,7 +79,7 @@ watch(
       <!-- HEADER -->
       <header class="mb-10">
         <h1 class="text-4xl md:text-7xl font-black mb-10 tracking-tighter text-slate-900 leading-tight">
-          {{ project.title }}
+          {{ t(project.title) }}
         </h1>
         
         <div class="flex flex-wrap gap-4">
@@ -89,12 +94,22 @@ watch(
       <!-- DESCRIPTION AVEC EFFET ENFONCÉ -->
       <section class="mb-10 p-2 rounded-[2.5rem] ">
         <p class="text-m text-slate-400 mt-4 italic">
-          {{ project.projetType }}
+          {{ t(project.projetType) }}
         </p>
         <p class="text-xl md:text-xl text-slate-600 leading-relaxed font-medium">
-          {{ project.fullDescription }}
+          {{ t(project.fullDescription) }}
         </p>
-        
+      </section>
+
+      <!-- POINTS CLÉS -->
+      <section v-if="project.highlights?.length" class="mb-16 p-8 rounded-[2.5rem] shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff]">
+        <h2 class="text-xs font-black uppercase tracking-widest text-blue-500 mb-4">{{ t(ui.highlights) }}</h2>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
+          <li v-for="(item, k) in project.highlights" :key="k" class="flex gap-3 text-slate-700 font-medium text-lg">
+            <span class="mt-2 w-2 h-2 shrink-0 rounded-full bg-blue-500"></span>
+            <span>{{ t(item) }}</span>
+          </li>
+        </ul>
       </section>
 
       <!-- TIMELINE -->
@@ -103,7 +118,7 @@ watch(
           <div class="w-16 h-16 flex items-center justify-center bg-slate-100 rounded-2xl shadow-[8px_8px_16px_#bebebe,-8px_-8px_16px_#ffffff]">
             <Rocket class="w-8 h-8 text-blue-500" />
           </div>
-          <h2 class="text-4xl font-black tracking-tight">Plan d'action</h2>
+          <h2 class="text-4xl font-black tracking-tight">{{ t(ui.actionPlan) }}</h2>
         </div>
 
         <div class="space-y-16">
@@ -112,9 +127,9 @@ watch(
             <div class="absolute left-0 top-0 bottom-0 w-2 bg-slate-100 shadow-[inset_2px_2px_4px_#bebebe,inset_-2px_-2px_4px_#ffffff] rounded-full"></div>
             
             <div class="mb-8">
-              <span class="text-blue-500 font-black text-xs uppercase tracking-widest">Étape 0{{ i + 1 }}</span>
-              <h3 class="text-2xl font-bold text-slate-800 mt-2">{{ step.step }}</h3>
-              <p class="text-slate-500 mt-4 text-lg leading-relaxed">{{ step.desc }}</p>
+              <span class="text-blue-500 font-black text-xs uppercase tracking-widest">{{ t(ui.step) }} {{ stepNumber(i) }}</span>
+              <h3 class="text-2xl font-bold text-slate-800 mt-2">{{ t(step.step) }}</h3>
+              <p class="text-slate-500 mt-4 text-lg leading-relaxed">{{ t(step.desc) }}</p>
             </div>
 
             <!-- BOUTON DOSSIER NÉOMORPHIQUE -->
@@ -125,7 +140,7 @@ watch(
               >
                 <Folder class="w-5 h-5 text-blue-500 group-hover:fill-blue-200 transition-all" />
                 <span class="font-bold text-sm text-slate-700 uppercase tracking-tight">
-                  {{ openFolders.has(i) ? 'Réduire' : `Documents (${step.gallery.length})` }}
+                  {{ openFolders.has(i) ? t(ui.collapse) : `${t(ui.documents)} (${step.gallery.length})` }}
                 </span>
                 <ChevronDown class="w-4 h-4 transition-transform" :class="{ 'rotate-180': openFolders.has(i) }" />
               </button>
@@ -142,7 +157,7 @@ watch(
                         <img 
                           :src="'/' + project.folder + file" 
                           class="block w-full h-auto max-h-[680px] xl:max-h-[860px] object-contain mx-auto rounded-xl cursor-zoom-in transition-transform duration-700 hover:scale-105" 
-                          alt="Document"
+                          :alt="t(step.step)"
                           loading="lazy"
                         />
                       </div>
@@ -162,9 +177,9 @@ watch(
 
                     <!-- CAS : VIDÉO -->
                     <div v-else-if="isVideo(file)" class="aspect-video rounded-xl overflow-hidden bg-slate-950">
-                      <video controls class="w-full h-full object-contain">
+                      <video controls preload="metadata" playsinline class="w-full h-full object-contain">
                         <source :src="'/' + project.folder + file" type="video/mp4" />
-                        Votre navigateur ne prend pas en charge les vidéos HTML5.
+                        {{ t(ui.videoUnsupported) }}
                       </video>
                     </div>
 
@@ -174,7 +189,7 @@ watch(
                         <iframe
                           :src="'/' + project.folder + file"
                           class="h-96 w-full"
-                          title="Prévisualisation PDF"
+                          :title="t(ui.pdfPreview)"
                           loading="lazy"
                         />
                       </div>
@@ -188,7 +203,7 @@ watch(
                           rel="noopener noreferrer"
                           class="shrink-0 rounded-lg bg-slate-100 px-3 py-2 text-[11px] font-black uppercase tracking-tighter text-slate-600 shadow-[3px_3px_6px_#d1d5db,-3px_-3px_6px_#ffffff] transition-all hover:text-blue-600 active:shadow-[inset_2px_2px_4px_#d1d5db]"
                         >
-                          Ouvrir
+                          {{ t(ui.open) }}
                         </a>
                       </div>
                     </div>
@@ -208,6 +223,7 @@ watch(
           type="button"
           class="absolute right-2 top-2 z-10 rounded-full bg-white/90 px-3 py-2 text-sm font-bold text-slate-700 shadow-lg"
           @click="closeMedia"
+          :aria-label="t(ui.close)"
         >
           ✕
         </button>
@@ -228,6 +244,18 @@ watch(
           </video>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- PROJET INTROUVABLE -->
+  <div v-else class="min-h-screen bg-slate-100 font-sans antialiased text-slate-800 flex items-center justify-center px-6">
+    <div class="text-center p-10 rounded-[40px] shadow-[20px_20px_60px_#bebebe,-10px_-10px_40px_#ffffff] max-w-lg">
+      <h1 class="text-4xl font-black text-slate-900 mb-4">{{ t(ui.notFoundTitle) }}</h1>
+      <p class="text-slate-500 text-lg mb-8">{{ t(ui.notFoundText) }}</p>
+      <router-link to="/" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-slate-100 font-bold text-slate-600 hover:text-blue-600 shadow-[6px_6px_12px_#bebebe,-6px_-6px_12px_#ffffff]">
+        <ChevronLeft class="w-5 h-5" />
+        {{ t(ui.seeProjects) }}
+      </router-link>
     </div>
   </div>
 </template>

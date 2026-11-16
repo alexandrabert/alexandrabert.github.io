@@ -9,15 +9,25 @@ const routes = [
     component: Home
   },
   {
+    // Ancienne adresse du projet d'animation de logo (avant le renommage)
+    path: '/project/disclamer',
+    redirect: '/project/intv-animation'
+  },
+  {
     path: '/project/:id',
     name: 'ProjectDetail',
     component: ProjectDetail
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/'
   }
 ]
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes,
+  scrollBehavior: () => ({ top: 0 })
 })
 
 export default router
