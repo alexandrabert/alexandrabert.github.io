@@ -96,7 +96,10 @@ const getProjectLogoPath = (project) => `/${project.logo}`
         <ul class="md:col-span-2 bg-slate-100 p-8 rounded-[2.5rem] shadow-[12px_12px_30px_#bebebe,-12px_-12px_30px_#ffffff] space-y-4">
           <li v-for="fact in profile.facts" :key="fact.label.en">
             <span class="block text-xs font-black uppercase tracking-widest text-blue-500">{{ t(fact.label) }}</span>
-            <span class="text-slate-700 font-medium">{{ t(fact.value) }}</span>
+            <template v-if="fact.lines">
+              <span v-for="(line, k) in fact.lines" :key="k" class="block text-slate-700 font-medium">{{ t(line) }}</span>
+            </template>
+            <span v-else class="text-slate-700 font-medium">{{ t(fact.value) }}</span>
           </li>
         </ul>
       </section>
@@ -170,7 +173,7 @@ const getProjectLogoPath = (project) => `/${project.logo}`
             v-for="project in section.projects"
             :key="project.id"
             :to="'/project/' + project.id"
-            class="group relative bg-slate-100 rounded-[2.5rem] p-4 transition-all duration-500 shadow-[20px_20px_60px_#bebebe,-20px_-20px_60px_#ffffff] hover:shadow-[inset_20px_20px_60px_#bebebe,inset_-20px_-20px_60px_#ffffff]"
+            class="group relative bg-slate-100 rounded-[2.5rem] p-4 shadow-[20px_20px_60px_#bebebe,-20px_-20px_60px_#ffffff]"
           >
             <!-- Mockup / Image Area (effet enfoncé) -->
             <div class="aspect-video bg-slate-100 rounded-[2rem] relative overflow-hidden shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff] mb-8">
@@ -201,8 +204,6 @@ const getProjectLogoPath = (project) => `/${project.logo}`
                 />
               </div>
 
-              <!-- Overlay discret au survol -->
-              <div class="absolute inset-0 bg-slate-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
             </div>
 
             <!-- Content -->

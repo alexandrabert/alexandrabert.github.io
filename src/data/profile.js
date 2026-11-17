@@ -24,8 +24,17 @@ export const profile = {
   facts: [
     { label: { en: 'School', fr: 'École' }, value: { en: 'Télécom SudParis, IP Paris (2024-2028)', fr: 'Télécom SudParis, IP Paris (2024-2028)' } },
     { label: { en: 'Focus', fr: 'Spécialité' }, value: { en: 'Distributed service architectures', fr: 'Architectures de services répartis' } },
-    { label: { en: 'Stack', fr: 'Technos' }, value: { en: 'Python, Java, C, FastAPI, Vue.js, SQL, Docker', fr: 'Python, Java, C, FastAPI, Vue.js, SQL, Docker' } },
-    { label: { en: 'Languages', fr: 'Langues' }, value: { en: 'French (native), English (B2, close to C1), Spanish (A2)', fr: 'Français (natif), anglais (B2, proche du C1), espagnol (A2)' } }
+    { label: { en: 'Programming', fr: 'Langages' }, value: { en: 'Python, Java, C, SQL', fr: 'Python, Java, C, SQL' } },
+    { label: { en: 'Frameworks & tools', fr: 'Frameworks et outils' }, value: { en: 'FastAPI, Vue.js, Docker', fr: 'FastAPI, Vue.js, Docker' } },
+    // Une langue par ligne
+    {
+      label: { en: 'Languages', fr: 'Langues' },
+      lines: [
+        { en: 'French (native)', fr: 'Français (natif)' },
+        { en: 'English (B2, close to C1)', fr: 'Anglais (B2, proche du C1)' },
+        { en: 'Spanish (A2)', fr: 'Espagnol (A2)' }
+      ]
+    }
   ],
   sections: {
     dev: {
