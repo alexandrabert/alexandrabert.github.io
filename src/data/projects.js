@@ -109,21 +109,21 @@ export const projects = [
     badge: { en: "Team of 4 · PM & UX", fr: "Équipe de 4 · Chef de projet & UX" },
     codeUrl: "https://gitlab.minet.net/safeint/safeint",
     projetType: {
-      en: "Team project (4 students), Cassiopée project at Télécom SudParis",
-      fr: "Projet d'équipe (4 étudiants), projet Cassiopée à Télécom SudParis"
+      en: "Cassiopée project at Télécom SudParis · team of 4 · partnership between MiNET and EquALLity",
+      fr: "Projet Cassiopée à Télécom SudParis · équipe de 4 · partenariat entre MiNET et EquALLity"
     },
     shortDescription: {
       en: "Campus safety mobile app with real-time geolocated alerts. My role: Figma mockups, project management, monitoring dashboard.",
       fr: "Application mobile de sécurité du campus avec alertes géolocalisées en temps réel. Mon rôle : maquettes Figma, gestion de projet, dashboard de suivi."
     },
     fullDescription: {
-      en: "A campus safety mobile application. Students can raise an alert and be located in real time on an interactive map, so that help reaches them quickly.",
-      fr: "Une application mobile de sécurité pour le campus. Un étudiant peut lancer une alerte et être localisé en temps réel sur une carte interactive, pour que l'aide arrive vite."
+      en: "A campus safety mobile application. Students can raise an alert and be located in real time on an interactive map, so that help reaches them quickly. Safe'INT is our Cassiopée project, the major software development project at Télécom SudParis, built in partnership with two campus associations: MiNET and EquALLity.",
+      fr: "Une application mobile de sécurité pour le campus. Un étudiant peut lancer une alerte et être localisé en temps réel sur une carte interactive, pour que l'aide arrive vite. Safe'INT est notre projet Cassiopée, le grand projet de développement de Télécom SudParis, mené en partenariat avec deux associations du campus : MiNET et EquALLity."
     },
     highlights: [
       { en: "I designed all the app mockups in Figma", fr: "J'ai conçu toutes les maquettes de l'app sur Figma" },
       { en: "I managed the project for the team of 4", fr: "J'ai géré le projet pour l'équipe de 4" },
-      { en: "I built the monitoring dashboard to collect data and verify the system", fr: "J'ai développé le dashboard de suivi pour collecter les données et vérifier le système" },
+      { en: "I built the monitoring dashboard: usage information and system checks", fr: "J'ai développé le dashboard de suivi : informations d'utilisation et vérification du système" },
       { en: "Team: FastAPI REST API, SQLite, push notifications, CI/CD on every push", fr: "Équipe : API REST FastAPI, SQLite, notifications push, CI/CD à chaque push" }
     ],
     technos: [
@@ -149,8 +149,8 @@ export const projects = [
         owner: "me",
         title: { en: "Leading the project and monitoring the system", fr: "Piloter le projet et suivre le système" },
         body: {
-          en: "I managed the project and coordinated the team of four through to the final delivery.\n\nI also built the monitoring dashboard, which collects the system's data so we could verify that it works correctly.",
-          fr: "J'ai géré le projet et coordonné l'équipe de quatre jusqu'à la livraison finale.\n\nJ'ai aussi développé le dashboard de suivi, qui collecte les données du système pour vérifier son bon fonctionnement."
+          en: "I managed the project and coordinated the team of four through to the final delivery, in liaison with our two partner associations, MiNET and EquALLity.\n\nI also built the monitoring dashboard. It gives usage information about the app and collects the system's data, so we could verify that everything works correctly.",
+          fr: "J'ai géré le projet et coordonné l'équipe de quatre jusqu'à la livraison finale, en lien avec nos deux associations partenaires, MiNET et EquALLity.\n\nJ'ai aussi développé le dashboard de suivi. Il donne des informations sur l'utilisation de l'app et collecte les données du système, pour vérifier que tout fonctionne correctement."
         },
         media: [
           { src: "dashboard.png", caption: { en: "Monitoring dashboard", fr: "Dashboard de suivi" } }
@@ -162,6 +162,13 @@ export const projects = [
         body: {
           en: "A REST API in Python / FastAPI handles users, alerts and positions, with a SQLite database and push notifications to warn helpers.\n\nThe app (Vue.js / Flutter) shows an interactive map and follows the position of the person who raised the alert in real time. A CI/CD pipeline runs on every push to the repository.",
           fr: "Une API REST en Python / FastAPI gère les utilisateurs, les alertes et les positions, avec une base SQLite et des notifications push pour prévenir les aidants.\n\nL'app (Vue.js / Flutter) affiche une carte interactive et suit en temps réel la position de la personne qui a lancé l'alerte. Un pipeline CI/CD s'exécute à chaque push sur le dépôt."
+        }
+      },
+      {
+        title: { en: "What's next", fr: "La suite" },
+        body: {
+          en: "The project will be continued next year, to finish it and launch its use on campus.",
+          fr: "Le projet sera repris l'année prochaine, pour le terminer et lancer son utilisation sur le campus."
         }
       }
     ]
