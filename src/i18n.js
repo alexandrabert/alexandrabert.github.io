@@ -37,13 +37,7 @@ export const t = (value) => {
 // Libellés de l'interface.
 export const ui = {
   backHome: { en: 'Back', fr: 'Retour' },
-  actionPlan: { en: 'How I built it', fr: "Plan d'action" },
-  step: { en: 'Step', fr: 'Étape' },
-  documents: { en: 'Documents', fr: 'Documents' },
-  collapse: { en: 'Hide', fr: 'Réduire' },
-  open: { en: 'Open', fr: 'Ouvrir' },
   highlights: { en: 'Key points', fr: 'Points clés' },
-  pdfPreview: { en: 'PDF preview', fr: 'Prévisualisation PDF' },
   videoUnsupported: { en: 'Your browser does not support HTML5 video.', fr: 'Votre navigateur ne prend pas en charge les vidéos HTML5.' },
   notFoundTitle: { en: 'Project not found', fr: 'Projet introuvable' },
   notFoundText: { en: 'This project does not exist or has moved.', fr: "Ce projet n'existe pas ou a été déplacé." },
@@ -52,5 +46,12 @@ export const ui = {
   myWork: { en: 'My work', fr: 'Mon travail' },
   teamWork: { en: 'Team work', fr: "Travail d'équipe" },
   viewCode: { en: 'View the source code on GitLab', fr: 'Voir le code source sur GitLab' },
+  inBrief: { en: 'At a glance', fr: 'En bref' },
+  openPdf: { en: 'Open in a new tab', fr: 'Ouvrir dans un nouvel onglet' },
+  pages: { en: 'pages', fr: 'pages' },
+  nextProject: { en: 'Next project', fr: 'Projet suivant' },
+  previous: { en: 'Previous', fr: 'Précédent' },
+  next: { en: 'Next', fr: 'Suivant' },
+  enlarge: { en: 'Enlarge', fr: 'Agrandir' },
   switchLang: { en: 'Passer en français', fr: 'Switch to English' }
 }

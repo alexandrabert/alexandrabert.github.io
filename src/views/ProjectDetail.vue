@@ -1,93 +1,104 @@
 <script setup>
-import { ref, onMounted, watch, computed } from 'vue';
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue';
 import { useRoute } from 'vue-router';
 import { projects } from '../data/projects';
 import { t, ui } from '../i18n';
 import NavBar from '../components/NavBar.vue';
-import { ChevronLeft, Rocket, Folder, ChevronDown } from 'lucide-vue-next';
+import MediaItem from '../components/MediaItem.vue';
 
 const route = useRoute();
-const project = computed(() => projects.find(p => p.id === route.params.id));
-const openFolders = ref(new Set());
-const selectedMedia = ref(null);
+const projectIndex = computed(() => projects.findIndex(p => p.id === route.params.id));
+const project = computed(() => projects[projectIndex.value]);
+const nextProject = computed(() => projects[(projectIndex.value + 1) % projects.length]);
 
-const toggleFolder = (index) => {
-  if (openFolders.value.has(index)) openFolders.value.delete(index);
-  else openFolders.value.add(index);
+const isImage = (src) => /\.(png|jpe?g|webp|gif|svg)$/i.test(src);
+const paragraphs = (text) => t(text).split(/\n\s*\n/);
+const number = (i) => String(i + 1).padStart(2, '0');
+
+// Un seul média image ou PDF : texte et média côte à côte.
+// Sinon : texte, puis les médias en mosaïque.
+const isSideBySide = (chapter) =>
+  chapter.media?.length === 1 && !/\.mp4$|youtu/i.test(chapter.media[0].src);
+const mosaicColumns = (chapter) => {
+  const n = chapter.media?.length ?? 0;
+  if (n >= 4) return 'sm:columns-2 lg:columns-3';
+  if (n >= 2) return 'sm:columns-2';
+  return '';
 };
 
-const isImage = (filename) => /\.(png|jpe?g|webp|gif|svg)$/i.test(filename);
-const stepNumber = (i) => String(i + 1).padStart(2, '0');
-const isVideo = (filename) => /\.mp4$/i.test(filename);
-const isYouTube = (filename) => /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\//i.test(filename);
-const isPDF = (filename) => filename.toLowerCase().endsWith('.pdf');
-
-const getYouTubeEmbedUrl = (url) => {
-  const match = url.match(/(?:youtube\.com\/watch\?v=|youtube\.com\/embed\/|youtu\.be\/)([\w-]{11})/i);
-  return match ? `https://www.youtube.com/embed/${match[1]}` : null;
-};
-
-const openMedia = (filename) => {
-  selectedMedia.value = filename;
-};
-
-const closeMedia = () => {
-  selectedMedia.value = null;
-};
-
-const initializeOpenFolders = () => {
-  const steps = project.value?.planAction ?? [];
-  openFolders.value = new Set(
-    steps
-      .map((_, index) => index)
-      .filter((index) => Array.isArray(steps[index]?.gallery) && steps[index].gallery.length > 0)
-  );
-};
-
-onMounted(() => {
-  initializeOpenFolders();
-  window.scrollTo(0, 0);
-});
-
-watch(
-  () => route.params.id,
-  () => {
-    initializeOpenFolders();
-    selectedMedia.value = null;
-    window.scrollTo(0, 0);
+// ---- Visionneuse plein écran (toutes les images de la page) ----
+const images = computed(() => {
+  if (!project.value) return [];
+  const list = [];
+  const seen = new Set();
+  const add = (src, caption) => {
+    if (!isImage(src) || seen.has(src)) return;
+    seen.add(src);
+    list.push({ src, caption });
+  };
+  add(project.value['princ-visual'], project.value.title);
+  for (const chapter of project.value.chapters ?? []) {
+    for (const m of chapter.media ?? []) add(m.src, m.caption);
   }
-);
+  return list;
+});
+const viewerIndex = ref(null);
+const current = computed(() => (viewerIndex.value === null ? null : images.value[viewerIndex.value]));
+
+const openViewer = (src) => {
+  const i = images.value.findIndex(img => img.src === src);
+  if (i !== -1) viewerIndex.value = i;
+};
+const closeViewer = () => { viewerIndex.value = null; };
+const step = (delta) => {
+  const n = images.value.length;
+  viewerIndex.value = (viewerIndex.value + delta + n) % n;
+};
+const onKey = (e) => {
+  if (viewerIndex.value === null) return;
+  if (e.key === 'Escape') closeViewer();
+  else if (e.key === 'ArrowRight') step(1);
+  else if (e.key === 'ArrowLeft') step(-1);
+};
+
+onMounted(() => window.addEventListener('keydown', onKey));
+onBeforeUnmount(() => window.removeEventListener('keydown', onKey));
+watch(() => route.params.id, () => { viewerIndex.value = null; });
+watch(viewerIndex, (v) => { document.body.style.overflow = v === null ? '' : 'hidden'; });
 </script>
 
 <template>
-  <div v-if="project" class="min-h-screen font-sans antialiased text-slate-800">
-    
+  <div v-if="project" class="min-h-screen font-sans antialiased text-slate-800 pb-24">
     <NavBar />
 
-    <article class="max-w-6xl mx-auto px-4 sm:px-6 py-20">
-      <!-- HEADER -->
+    <article class="max-w-5xl mx-auto px-5 sm:px-6 pt-12">
+      <!-- EN-TÊTE -->
       <header class="mb-10">
-        <h1 class="text-4xl md:text-7xl font-black mb-10 tracking-tighter text-slate-900 leading-tight">
-          {{ t(project.title) }}
-        </h1>
-        
-        <div class="flex flex-wrap gap-4">
-          <div v-for="tech in project.technos" :key="tech.name" 
-               class="flex items-center gap-3 bg-slate-100 p-3 rounded-2xl shadow-[6px_6px_12px_#bebebe,-6px_-6px_12px_#ffffff]">
-            <img :src="'/icons/' + tech.icon" class="w-6 h-6" :alt="tech.name" />
-            <span class="font-bold text-slate-600 text-xs uppercase tracking-widest">{{ tech.name }}</span>
+        <div class="flex items-center gap-4 mb-5">
+          <div class="w-14 h-14 p-2.5 shrink-0 bg-slate-100 rounded-2xl shadow-[5px_5px_10px_#bebebe,-5px_-5px_10px_#ffffff]">
+            <img :src="'/' + project.logo" alt="" class="w-full h-full object-contain" />
           </div>
+          <p class="text-sm md:text-base font-bold text-blue-600">{{ t(project.projetType) }}</p>
         </div>
-      </header>
 
-      <!-- DESCRIPTION AVEC EFFET ENFONCÉ -->
-      <section class="mb-10 p-2 rounded-[2.5rem] ">
-        <p class="text-m text-slate-400 mt-4 italic">
-          {{ t(project.projetType) }}
-        </p>
-        <p class="text-xl md:text-xl text-slate-600 leading-relaxed font-medium">
-          {{ t(project.fullDescription) }}
-        </p>
+        <h1 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tight mb-5">{{ t(project.title) }}</h1>
+        <p class="text-lg md:text-xl text-slate-700 leading-relaxed max-w-3xl">{{ t(project.fullDescription) }}</p>
+
+        <!-- Infos : dates, rôle, technos -->
+        <div class="mt-6 flex flex-wrap items-center gap-2.5">
+          <span v-if="project.dates" class="px-3 py-1.5 rounded-xl bg-slate-200/80 text-xs font-black uppercase tracking-widest text-slate-600">{{ project.dates }}</span>
+          <span v-if="project.badge" class="px-3 py-1.5 rounded-xl bg-blue-100 text-blue-700 text-xs font-black uppercase tracking-wider">{{ t(project.badge) }}</span>
+          <span
+            v-for="tech in project.technos"
+            :key="tech.name"
+            class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 shadow-[3px_3px_6px_#bebebe,-3px_-3px_6px_#ffffff] text-xs font-bold text-slate-600"
+          >
+            <img :src="'/icons/' + tech.icon" class="w-4 h-4" alt="" />
+            {{ tech.name }}
+          </span>
+        </div>
+
+        <!-- Code -->
         <a
           v-if="project.codeUrl"
           :href="project.codeUrl"
@@ -99,163 +110,140 @@ watch(
         </a>
         <p
           v-else-if="project.codeNote"
-          class="mt-6 inline-block px-5 py-3 rounded-2xl bg-slate-100 text-slate-600 font-semibold shadow-[inset_4px_4px_8px_#d1d5db,inset_-4px_-4px_8px_#ffffff]"
+          class="mt-6 inline-block px-5 py-3 rounded-2xl bg-slate-100 text-slate-700 font-semibold shadow-[inset_4px_4px_8px_#d1d5db,inset_-4px_-4px_8px_#ffffff]"
         >
           🔒 {{ t(project.codeNote) }}
         </p>
-      </section>
+      </header>
 
-      <!-- POINTS CLÉS -->
-      <section v-if="project.highlights?.length" class="bg-slate-100 mb-16 p-8 rounded-[2.5rem] shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff]">
-        <h2 class="text-xs font-black uppercase tracking-widest text-blue-500 mb-4">{{ t(ui.highlights) }}</h2>
-        <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
-          <li v-for="(item, k) in project.highlights" :key="k" class="flex gap-3 text-slate-700 font-medium text-lg">
-            <span class="mt-2 w-2 h-2 shrink-0 rounded-full bg-blue-500"></span>
+      <!-- COUVERTURE -->
+      <button
+        v-if="project['princ-visual']"
+        type="button"
+        class="group block w-full mb-12 overflow-hidden rounded-[2rem] bg-slate-100 shadow-[16px_16px_40px_#bebebe,-12px_-12px_32px_#ffffff] cursor-zoom-in"
+        :aria-label="t(ui.enlarge)"
+        @click="openViewer(project['princ-visual'])"
+      >
+        <img
+          :src="'/' + project.folder + project['princ-visual']"
+          :alt="t(project.title)"
+          class="w-full max-h-[560px] object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+        />
+      </button>
+
+      <!-- EN BREF -->
+      <section v-if="project.highlights?.length" class="mb-12 bg-slate-100 p-7 md:p-9 rounded-[2rem] shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff]">
+        <h2 class="text-xs font-black uppercase tracking-widest text-blue-600 mb-4">{{ t(ui.inBrief) }}</h2>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-3">
+          <li v-for="(item, k) in project.highlights" :key="k" class="flex gap-3 text-slate-700 font-medium text-base md:text-lg">
+            <span class="mt-2.5 w-2 h-2 shrink-0 rounded-full bg-blue-500"></span>
             <span>{{ t(item) }}</span>
           </li>
         </ul>
       </section>
 
-      <!-- TIMELINE -->
-      <section class="mt-22">
-        <div class="flex items-center gap-6 mb-16">
-          <div class="w-16 h-16 flex items-center justify-center bg-slate-100 rounded-2xl shadow-[8px_8px_16px_#bebebe,-8px_-8px_16px_#ffffff]">
-            <Rocket class="w-8 h-8 text-blue-500" />
-          </div>
-          <h2 class="text-4xl font-black tracking-tight">{{ t(ui.actionPlan) }}</h2>
-        </div>
-
-        <div class="space-y-10">
-          <div v-for="(step, i) in project.planAction" :key="i" class="relative">
-            
-            <!-- Bloc de l'étape : fond plein pour le détacher du quadrillage -->
-            <div class="bg-slate-100 rounded-[2rem] p-6 md:p-8 shadow-[12px_12px_30px_#bebebe,-12px_-12px_30px_#ffffff]">
-            <div :class="step.gallery?.length ? 'mb-8' : ''">
-              <div class="flex flex-wrap items-center gap-3">
-                <span class="text-blue-500 font-black text-xs uppercase tracking-widest">{{ t(ui.step) }} {{ stepNumber(i) }}</span>
+      <!-- CHAPITRES -->
+      <div class="space-y-10">
+        <section
+          v-for="(chapter, i) in project.chapters"
+          :key="i"
+          class="bg-slate-100 rounded-[2rem] p-6 md:p-10 shadow-[12px_12px_30px_#bebebe,-12px_-12px_30px_#ffffff]"
+        >
+          <div
+            :class="isSideBySide(chapter)
+              ? 'grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center'
+              : ''"
+          >
+            <!-- Texte -->
+            <div :class="isSideBySide(chapter) && i % 2 === 1 ? 'md:order-2' : ''">
+              <div class="flex flex-wrap items-center gap-3 mb-3">
+                <span class="text-blue-500 font-black text-sm tracking-widest">{{ number(i) }}</span>
                 <span
-                  v-if="step.owner"
+                  v-if="chapter.owner"
                   class="px-2.5 py-1 rounded-lg text-[11px] font-black uppercase tracking-wider"
-                  :class="step.owner === 'me' ? 'bg-blue-100 text-blue-700' : 'bg-slate-200 text-slate-600'"
-                >{{ step.owner === 'me' ? t(ui.myWork) : t(ui.teamWork) }}</span>
+                  :class="chapter.owner === 'me' ? 'bg-blue-100 text-blue-700' : 'bg-slate-200 text-slate-600'"
+                >{{ chapter.owner === 'me' ? t(ui.myWork) : t(ui.teamWork) }}</span>
               </div>
-              <h3 class="text-2xl font-bold text-slate-800 mt-2">{{ t(step.step) }}</h3>
-              <p class="text-slate-500 mt-4 text-lg leading-relaxed">{{ t(step.desc) }}</p>
+              <h2 class="text-2xl md:text-3xl font-black text-slate-900 mb-4">{{ t(chapter.title) }}</h2>
+              <p
+                v-for="(para, k) in paragraphs(chapter.body)"
+                :key="k"
+                class="text-slate-700 text-base md:text-lg leading-relaxed max-w-prose mb-4 last:mb-0"
+              >{{ para }}</p>
             </div>
 
-            <!-- BOUTON DOSSIER NÉOMORPHIQUE -->
-            <div v-if="step.gallery && step.gallery.length > 0">
-              <button 
-                @click="toggleFolder(i)"
-                class="flex items-center gap-4 px-6 py-4 rounded-2xl bg-slate-100 shadow-[6px_6px_12px_#bebebe,-6px_-6px_12px_#ffffff] active:shadow-[inset_4px_4px_8px_#bebebe,inset_-4px_-4px_8px_#ffffff] transition-all group"
-              >
-                <Folder class="w-5 h-5 text-blue-500 group-hover:fill-blue-200 transition-all" />
-                <span class="font-bold text-sm text-slate-700 uppercase tracking-tight">
-                  {{ openFolders.has(i) ? t(ui.collapse) : `${t(ui.documents)} (${step.gallery.length})` }}
-                </span>
-                <ChevronDown class="w-4 h-4 transition-transform" :class="{ 'rotate-180': openFolders.has(i) }" />
-              </button>
-
-              <transition name="fade-slide">
-                <div v-if="openFolders.has(i)" class="mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 p-6 sm:p-8 rounded-[2rem] bg-slate-100 shadow-[inset_6px_6px_12px_#d1d5db,inset_-6px_-6px_12px_#ffffff]">
-                  
-                  <div v-for="(file, fileIdx) in step.gallery" :key="fileIdx" 
-                      class="mb-6 break-inside-avoid rounded-2xl p-3 bg-slate-100 shadow-[6px_6px_12px_#d1d5db,-6px_-6px_12px_#ffffff] transition-all duration-300 hover:shadow-[2px_2px_5px_#d1d5db,-2px_-2px_5px_#ffffff]">
-                    
-                    <!-- CAS : IMAGE -->
-                    <button v-if="isImage(file)" type="button" class="block w-full text-left" @click="openMedia(file)">
-                      <div class="overflow-hidden rounded-xl bg-slate-200/80">
-                        <img 
-                          :src="'/' + project.folder + file" 
-                          class="block w-full h-auto max-h-[680px] xl:max-h-[860px] object-contain mx-auto rounded-xl cursor-zoom-in transition-transform duration-700 hover:scale-105" 
-                          :alt="t(step.step)"
-                          loading="lazy"
-                        />
-                      </div>
-                    </button>
-
-                    <!-- CAS : YOUTUBE -->
-                    <div v-else-if="isYouTube(file)" class="aspect-video rounded-xl overflow-hidden bg-slate-950">
-                      <iframe
-                        v-if="getYouTubeEmbedUrl(file)"
-                        :src="getYouTubeEmbedUrl(file)"
-                        class="h-full w-full"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                        title="YouTube video"
-                      />
-                    </div>
-
-                    <!-- CAS : VIDÉO -->
-                    <div v-else-if="isVideo(file)" class="aspect-video rounded-xl overflow-hidden bg-slate-950">
-                      <video controls preload="metadata" playsinline class="w-full h-full object-contain">
-                        <source :src="'/' + project.folder + file" type="video/mp4" />
-                        {{ t(ui.videoUnsupported) }}
-                      </video>
-                    </div>
-
-                    <!-- CAS : PDF -->
-                    <div v-else class="rounded-xl bg-slate-50 p-3">
-                      <div class="overflow-hidden rounded-xl border border-slate-200 bg-white">
-                        <iframe
-                          :src="'/' + project.folder + file"
-                          class="h-96 w-full"
-                          :title="t(ui.pdfPreview)"
-                          loading="lazy"
-                        />
-                      </div>
-                      <div class="mt-3 flex items-center justify-between gap-2">
-                        <span class="truncate text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                          {{ file }}
-                        </span>
-                        <a 
-                          :href="'/' + project.folder + file" 
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="shrink-0 rounded-lg bg-slate-100 px-3 py-2 text-[11px] font-black uppercase tracking-tighter text-slate-600 shadow-[3px_3px_6px_#d1d5db,-3px_-3px_6px_#ffffff] transition-all hover:text-blue-600 active:shadow-[inset_2px_2px_4px_#d1d5db]"
-                        >
-                          {{ t(ui.open) }}
-                        </a>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              </transition>
-            </div>
+            <!-- Média unique, à côté du texte -->
+            <div v-if="isSideBySide(chapter)" :class="i % 2 === 1 ? 'md:order-1' : ''">
+              <MediaItem :media="chapter.media[0]" :folder="project.folder" tall @open="openViewer" />
             </div>
           </div>
+
+          <!-- Plusieurs médias : mosaïque sous le texte -->
+          <div
+            v-if="chapter.media?.length && !isSideBySide(chapter)"
+            class="mt-8 gap-5"
+            :class="mosaicColumns(chapter)"
+          >
+            <MediaItem
+              v-for="(m, k) in chapter.media"
+              :key="k"
+              :media="m"
+              :folder="project.folder"
+              @open="openViewer"
+            />
+          </div>
+        </section>
+      </div>
+
+      <!-- PROJET SUIVANT -->
+      <router-link
+        v-if="nextProject && nextProject.id !== project.id"
+        :to="'/project/' + nextProject.id"
+        class="group mt-14 flex items-center justify-between gap-6 p-6 md:p-8 rounded-[2rem] bg-slate-100 shadow-[12px_12px_30px_#bebebe,-12px_-12px_30px_#ffffff]"
+      >
+        <div>
+          <span class="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1">{{ t(ui.nextProject) }}</span>
+          <span class="text-2xl md:text-3xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">{{ t(nextProject.title) }}</span>
         </div>
-      </section>
+        <span class="text-3xl text-blue-600 transition-transform group-hover:translate-x-1">→</span>
+      </router-link>
     </article>
 
-    <div v-if="selectedMedia" class="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/90 p-4 backdrop-blur-sm" @click.self="closeMedia">
-      <div class="relative w-full max-w-6xl">
+    <!-- VISIONNEUSE PLEIN ÉCRAN -->
+    <div
+      v-if="current"
+      class="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-slate-950/90 p-4 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      @click.self="closeViewer"
+    >
+      <button
+        type="button"
+        class="absolute right-4 top-4 rounded-full bg-white/90 w-10 h-10 text-lg font-bold text-slate-700 shadow-lg"
+        :aria-label="t(ui.close)"
+        @click="closeViewer"
+      >✕</button>
+
+      <img :src="'/' + project.folder + current.src" :alt="t(current.caption)" class="max-h-[82vh] max-w-full rounded-xl object-contain bg-white" />
+      <p class="mt-4 text-sm text-white/80 text-center">
+        {{ t(current.caption) }}
+        <span v-if="images.length > 1" class="ml-2 text-white/50">{{ viewerIndex + 1 }} / {{ images.length }}</span>
+      </p>
+
+      <template v-if="images.length > 1">
         <button
           type="button"
-          class="absolute right-2 top-2 z-10 rounded-full bg-white/90 px-3 py-2 text-sm font-bold text-slate-700 shadow-lg"
-          @click="closeMedia"
-          :aria-label="t(ui.close)"
-        >
-          ✕
-        </button>
-        <div class="overflow-hidden rounded-[2rem] bg-slate-900/80 p-2 shadow-2xl">
-          <img
-            v-if="isImage(selectedMedia)"
-            :src="'/' + project.folder + selectedMedia"
-            class="max-h-[85vh] w-full object-contain"
-            :alt="selectedMedia"
-          />
-          <video
-            v-else-if="isVideo(selectedMedia)"
-            controls
-            preload="metadata"
-            class="max-h-[85vh] w-full object-contain bg-black"
-          >
-            <source :src="'/' + project.folder + selectedMedia" type="video/mp4" />
-          </video>
-        </div>
-      </div>
+          class="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 rounded-full bg-white/90 w-11 h-11 text-xl font-bold text-slate-700 shadow-lg"
+          :aria-label="t(ui.previous)"
+          @click="step(-1)"
+        >‹</button>
+        <button
+          type="button"
+          class="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 rounded-full bg-white/90 w-11 h-11 text-xl font-bold text-slate-700 shadow-lg"
+          :aria-label="t(ui.next)"
+          @click="step(1)"
+        >›</button>
+      </template>
     </div>
   </div>
 
@@ -265,14 +253,8 @@ watch(
       <h1 class="text-4xl font-black text-slate-900 mb-4">{{ t(ui.notFoundTitle) }}</h1>
       <p class="text-slate-500 text-lg mb-8">{{ t(ui.notFoundText) }}</p>
       <router-link to="/" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-slate-100 font-bold text-slate-600 hover:text-blue-600 shadow-[6px_6px_12px_#bebebe,-6px_-6px_12px_#ffffff]">
-        <ChevronLeft class="w-5 h-5" />
-        {{ t(ui.seeProjects) }}
+        ← {{ t(ui.seeProjects) }}
       </router-link>
     </div>
   </div>
 </template>
-
-<style scoped>
-.fade-slide-enter-active, .fade-slide-leave-active { transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-.fade-slide-enter-from, .fade-slide-leave-to { opacity: 0; transform: translateY(-10px); }
-</style>

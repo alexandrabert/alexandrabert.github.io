@@ -1,8 +1,17 @@
 // Contenu du portfolio.
 // Chaque texte affiché existe en deux langues : { en: "...", fr: "..." }.
 // L'anglais est la langue par défaut du site.
+//
 // category : "dev" (Software Engineering) ou "design" (Design & Communication).
-// gallery : fichiers du dossier public/<folder>, ou liens YouTube.
+// chapters : le récit du projet, en 1 à 4 chapitres.
+//   - body : le texte ; une ligne vide (\n\n) sépare deux paragraphes.
+//   - owner (optionnel) : "me" (mon travail) ou "team" (travail d'équipe).
+//   - media : fichiers du dossier public/<folder>, ou liens YouTube.
+//       { src: "image.webp", caption: { en, fr } }
+//       { src: "doc.pdf", pages: 11, caption: { en, fr } }
+//         -> carte avec aperçu, ouverte dans un nouvel onglet.
+//            L'aperçu est l'image doc-apercu.webp (première page du PDF).
+//       { src: "https://www.youtube.com/watch?v=...", caption: { en, fr } }
 
 export const projects = [
   {
@@ -28,8 +37,8 @@ export const projects = [
       fr: "Application web d'écoute de musique pour le campus : backend FastAPI avec streaming MP3 côté serveur, frontend Vue.js."
     },
     fullDescription: {
-      en: "A modern music streaming platform for the IMT (Institut Mines-Télécom) campus, inspired by Spotify. Tracks are added either from YouTube links, converted to MP3 on the server, or by uploading MP3 files directly, then streamed by the backend. It is a complete rebuild of the original Spotif'INT, which only played YouTube videos through links.",
-      fr: "Plateforme moderne d'écoute de musique pour le campus de l'IMT (Institut Mines-Télécom), inspirée de Spotify. Les titres sont ajoutés soit à partir de liens YouTube, convertis en MP3 sur le serveur, soit par envoi direct de fichiers MP3, puis diffusés en streaming par le backend. C'est une refonte complète de l'ancien Spotif'INT, qui se contentait de lire des vidéos YouTube via des liens."
+      en: "A modern music streaming platform for the IMT (Institut Mines-Télécom) campus, inspired by Spotify. Tracks are added either from YouTube links, converted to MP3 on the server, or by uploading MP3 files directly, then streamed by the backend.",
+      fr: "Une plateforme moderne d'écoute de musique pour le campus de l'IMT (Institut Mines-Télécom), inspirée de Spotify. Les titres sont ajoutés soit à partir de liens YouTube, convertis en MP3 sur le serveur, soit par envoi direct de fichiers MP3, puis diffusés en streaming par le backend."
     },
     highlights: [
       { en: "Solo project: UX/UI, frontend, backend and database", fr: "Projet en solo : UX/UI, frontend, backend et base de données" },
@@ -43,74 +52,49 @@ export const projects = [
       { name: "TailwindCSS", icon: "tailwindcss.svg" },
       { name: "SQLite", icon: "sqlite.svg" }
     ],
-    planAction: [
+    chapters: [
       {
-        step: { en: "Starting point: the old project", fr: "Projet initial à remanier" },
-        desc: {
-          en: "The existing Spotif'INT played YouTube videos from links, with a very basic interface.",
-          fr: "Le Spotif'INT actuel est une application de lecture de vidéos YouTube via des liens, avec une interface basique."
+        title: { en: "The starting point", fr: "Le point de départ" },
+        body: {
+          en: "The existing Spotif'INT only played YouTube videos through links, with a very basic interface. I decided to rebuild it from scratch as a real streaming platform for the campus: its own audio files, playlists, likes and a moderation space for student associations.",
+          fr: "Le Spotif'INT existant se contentait de lire des vidéos YouTube via des liens, avec une interface très basique. J'ai décidé de le reconstruire entièrement en une vraie plateforme de streaming pour le campus : ses propres fichiers audio, des playlists, des likes et un espace de modération pour les associations."
         },
-        gallery: ["ancien-projet.pdf"]
+        media: [
+          { src: "ancien-projet.pdf", pages: 3, caption: { en: "The original Spotif'INT", fr: "L'ancien Spotif'INT" } }
+        ]
       },
       {
-        step: { en: "UX/UI: mobile and desktop mockups", fr: "UX/UI : maquettes mobile et desktop" },
-        desc: {
-          en: "A mobile-first PWA, since most students listen on their phone. Smooth playback with a smart switch between the 'Mini-Player' (while browsing) and the 'Full-Player' (immersive view). A simple design using the MiNET association's colours.",
-          fr: "Développement d'une PWA d'abord orientée utilisateur mobile (car plus souvent utilisée). Système de lecture fluide avec bascule intelligente entre le « Mini-Player » (navigation) et le « Full-Player » (immersion). Design simple et reprenant les couleurs de l'association MiNET."
+        title: { en: "Designing the experience", fr: "Concevoir l'expérience" },
+        body: {
+          en: "Most students listen on their phone, so I designed a mobile-first PWA. Playback stays smooth thanks to a switch between a 'Mini-Player' while browsing and a 'Full-Player' for an immersive view.\n\nThe design is deliberately simple and uses the colours of the MiNET association. I then adapted the mockups to desktop.",
+          fr: "La plupart des étudiants écoutent sur leur téléphone : j'ai donc conçu une PWA pensée d'abord pour le mobile. La lecture reste fluide grâce à une bascule entre un « Mini-Player » pendant la navigation et un « Full-Player » pour une vue immersive.\n\nLe design est volontairement simple et reprend les couleurs de l'association MiNET. J'ai ensuite décliné les maquettes en version desktop."
         },
-        gallery: ["mobile-maquette.pdf", "desktop-maquette.pdf"]
+        media: [
+          { src: "mobile-maquette.pdf", pages: 11, caption: { en: "Mobile mockups", fr: "Maquettes mobile" } },
+          { src: "desktop-maquette.pdf", pages: 7, caption: { en: "Desktop mockups", fr: "Maquettes desktop" } }
+        ]
       },
       {
-        step: { en: "Frontend with Vue.js and TailwindCSS", fr: "Création du frontend avec Vue.js et TailwindCSS" },
-        desc: {
-          en: "Responsive interface built with Vue.js and TailwindCSS, Lucide icons and reusable components. Playback logic with state management (play, pause, next, previous), first tested on a sample database.",
-          fr: "Interface responsive développée avec Vue.js et TailwindCSS, Lucide icons et des composants réutilisables. Logique de lecture avec gestion des états (play, pause, next, previous), d'abord testée sur une base de données test."
+        title: { en: "Architecture and backend", fr: "Architecture et backend" },
+        body: {
+          en: "The data model follows a recursive structure (Association > Club > List) that manages permissions and resources, stored in SQLite with playlists and liked tracks.\n\nA REST API in FastAPI handles tracks, playlists and likes. Users add a track either by pasting a YouTube link, which the server downloads and converts to MP3, or by uploading an MP3 file; the backend then streams the files to the player. When no cover is provided, the logo of the parent entity is used. Accounts are linked to the MiNET association, with secured network access.",
+          fr: "Le modèle de données suit une structure récursive (Asso > Club > Liste) qui gère les droits et les ressources, stockée en SQLite avec les playlists et les titres likés.\n\nUne API REST en FastAPI gère les titres, les playlists et les likes. Un titre s'ajoute soit en collant un lien YouTube, que le serveur télécharge et convertit en MP3, soit en envoyant un fichier MP3 ; le backend diffuse ensuite les fichiers en streaming vers le lecteur. Quand aucune couverture n'est fournie, c'est le logo de l'entité parente qui est utilisé. Les comptes sont liés à l'association MiNET, avec un accès réseau sécurisé."
         },
-        gallery: ["mobile-frontend.pdf", "desktop-frontend.pdf"]
+        media: [
+          { src: "diagramme-de-classe.webp", caption: { en: "Class diagram", fr: "Diagramme de classes" } }
+        ]
       },
       {
-        step: { en: "Hierarchical architecture and database", fr: "Architecture hiérarchique et BDD" },
-        desc: {
-          en: "A recursive data structure (Association > Club > List) to manage permissions and resources. Database model in SQLite, with playlists and liked tracks.",
-          fr: "Structure de données récursive (Asso > Club > Liste) pour la gestion des droits et des ressources. Modèle de BDD en SQLite, avec les playlists et les titres likés."
+        title: { en: "Interface and moderation", fr: "Interface et modération" },
+        body: {
+          en: "The frontend is built with Vue.js and TailwindCSS, with reusable components and playback state management (play, pause, next, previous). A secure 'Like' system allows one like per user and per track, and liked tracks are added to personal playlists.\n\nStudent associations get a moderation dashboard to approve, edit or hide submitted tracks, with priorities that change during campaign events.",
+          fr: "Le frontend est développé avec Vue.js et TailwindCSS, avec des composants réutilisables et une gestion des états de lecture (play, pause, suivant, précédent). Un système de « Like » sécurisé autorise un like par utilisateur et par titre, et les titres likés rejoignent les playlists personnelles.\n\nLes associations disposent d'un dashboard de modération pour valider, modifier ou masquer les titres proposés, avec des priorités qui changent pendant les campagnes."
         },
-        gallery: ["diagramme-de-classe.webp"]
-      },
-      {
-        step: { en: "Adding tracks: YouTube links or MP3 files", fr: "Ajout de titres : liens YouTube ou fichiers MP3" },
-        desc: {
-          en: "Users add a track either by pasting a YouTube link, which the server downloads and converts to MP3, or by uploading an MP3 file. Metadata handling with a fallback: when no cover is provided, the logo of the parent entity (association or campaign team) is used.",
-          fr: "Un titre s'ajoute soit en collant un lien YouTube, que le serveur télécharge et convertit en MP3, soit en envoyant directement un fichier MP3. Gestion des métadonnées avec un « fallback » : si aucune couverture n'est fournie, c'est le logo de l'entité parente (Asso/Mandat) qui est utilisé."
-        }
-      },
-      {
-        step: { en: "Server-side MP3 streaming", fr: "Streaming MP3 côté serveur" },
-        desc: {
-          en: "The FastAPI backend stores the MP3 files and streams them to the player, alongside the REST API for tracks, playlists and likes.",
-          fr: "Le backend FastAPI stocke les fichiers MP3 et les diffuse en streaming vers le lecteur, en plus de l'API REST pour les titres, les playlists et les likes."
-        }
-      },
-      {
-        step: { en: "Admin and moderation dashboard", fr: "Dashboard d'administration et modération" },
-        desc: {
-          en: "A control panel for student life: approve, edit or hide tracks submitted by users, with dynamic priorities during campaign events.",
-          fr: "Panneau de contrôle pour la vie associative : validation, modification et masquage des titres soumis par les utilisateurs, avec une gestion dynamique des priorités pendant les campagnes."
-        },
-        gallery: ["admin_moderation_view.pdf"]
-      },
-      {
-        step: { en: "Playlists and engagement", fr: "Playlists et engagement" },
-        desc: {
-          en: "A secure 'Like' system (anti-spam: one like per user per track), combined with automatic addition to personal playlists.",
-          fr: "Système de « Like » sécurisé (anti-spam : 1 like par utilisateur et par titre) couplé à l'ajout automatique aux playlists personnelles."
-        }
-      },
-      {
-        step: { en: "Accounts and security", fr: "Comptes et sécurité" },
-        desc: {
-          en: "User accounts linked to the MiNET student network association, with secured network access.",
-          fr: "Comptes utilisateurs liés à l'association MiNET, avec un accès réseau sécurisé."
-        }
+        media: [
+          { src: "mobile-frontend.pdf", pages: 5, caption: { en: "Mobile interface", fr: "Interface mobile" } },
+          { src: "desktop-frontend.pdf", pages: 4, caption: { en: "Desktop interface", fr: "Interface desktop" } },
+          { src: "admin_moderation_view.pdf", pages: 3, caption: { en: "Moderation dashboard", fr: "Dashboard de modération" } }
+        ]
       }
     ]
   },
@@ -133,8 +117,8 @@ export const projects = [
       fr: "Application mobile de sécurité du campus avec alertes géolocalisées en temps réel. Mon rôle : maquettes Figma, gestion de projet, dashboard de suivi."
     },
     fullDescription: {
-      en: "Safe'INT is a campus safety mobile application. Students can raise an alert and be located in real time on an interactive map, so that help reaches them quickly. The backend is a REST API in Python / FastAPI with a SQLite database and push notifications; the frontend uses Vue.js and Flutter.",
-      fr: "Safe'INT est une application mobile de sécurité pour le campus. Un étudiant peut lancer une alerte et être localisé en temps réel sur une carte interactive, pour que l'aide arrive vite. Le backend est une API REST en Python / FastAPI avec une base SQLite et des notifications push ; le frontend utilise Vue.js et Flutter."
+      en: "A campus safety mobile application. Students can raise an alert and be located in real time on an interactive map, so that help reaches them quickly.",
+      fr: "Une application mobile de sécurité pour le campus. Un étudiant peut lancer une alerte et être localisé en temps réel sur une carte interactive, pour que l'aide arrive vite."
     },
     highlights: [
       { en: "I designed all the app mockups in Figma", fr: "J'ai conçu toutes les maquettes de l'app sur Figma" },
@@ -149,55 +133,35 @@ export const projects = [
       { name: "Vue.js", icon: "vue.svg" },
       { name: "Flutter", icon: "flutter.svg" }
     ],
-    planAction: [
+    chapters: [
       {
         owner: "me",
-        step: { en: "UI/UX design in Figma", fr: "Conception UI/UX sur Figma" },
-        desc: {
-          en: "I designed all the app mockups. A 'safety-first' interface: clean and reassuring, with large, accessible emergency buttons for stressful situations. I worked on the user flow, from opening the app to triggering an alert.",
-          fr: "J'ai conçu toutes les maquettes de l'app. Une interface « Safety-first » : épurée et rassurante, avec des boutons d'urgence larges et accessibles pour les situations de stress. J'ai travaillé le parcours utilisateur, de l'ouverture de l'app au déclenchement d'une alerte."
+        title: { en: "Designing for stressful situations", fr: "Concevoir pour les situations de stress" },
+        body: {
+          en: "I designed all the app mockups in Figma. The interface is 'safety-first': clean and reassuring, with large, accessible emergency buttons that remain easy to use under stress.\n\nI worked on the whole user flow, from opening the app to triggering an alert.",
+          fr: "J'ai conçu toutes les maquettes de l'app sur Figma. L'interface est pensée « safety-first » : épurée et rassurante, avec des boutons d'urgence larges et accessibles, faciles à utiliser sous le stress.\n\nJ'ai travaillé tout le parcours utilisateur, de l'ouverture de l'app au déclenchement d'une alerte."
         },
-        gallery: ["mobile-maquette.pdf"]
+        media: [
+          { src: "mobile-maquette.pdf", pages: 14, caption: { en: "App mockups (Figma)", fr: "Maquettes de l'app (Figma)" } }
+        ]
       },
       {
         owner: "me",
-        step: { en: "Project management", fr: "Gestion de projet" },
-        desc: {
-          en: "I managed the project and coordinated the team of four through to the final delivery.",
-          fr: "J'ai géré le projet et coordonné l'équipe de quatre jusqu'à la livraison finale."
-        }
-      },
-      {
-        owner: "me",
-        step: { en: "Monitoring dashboard", fr: "Dashboard de suivi" },
-        desc: {
-          en: "I built the monitoring dashboard, which collects the system's data so we could verify that it works correctly.",
-          fr: "J'ai développé le dashboard de suivi, qui collecte les données du système pour vérifier son bon fonctionnement."
+        title: { en: "Leading the project and monitoring the system", fr: "Piloter le projet et suivre le système" },
+        body: {
+          en: "I managed the project and coordinated the team of four through to the final delivery.\n\nI also built the monitoring dashboard, which collects the system's data so we could verify that it works correctly.",
+          fr: "J'ai géré le projet et coordonné l'équipe de quatre jusqu'à la livraison finale.\n\nJ'ai aussi développé le dashboard de suivi, qui collecte les données du système pour vérifier son bon fonctionnement."
         },
-        gallery: ["dashboard.png"]
+        media: [
+          { src: "dashboard.png", caption: { en: "Monitoring dashboard", fr: "Dashboard de suivi" } }
+        ]
       },
       {
         owner: "team",
-        step: { en: "Backend: REST API in Python / FastAPI", fr: "Backend : API REST en Python / FastAPI" },
-        desc: {
-          en: "A REST API in FastAPI handles users, alerts and positions, with a SQLite database and push notifications to warn helpers.",
-          fr: "Une API REST en FastAPI gère les utilisateurs, les alertes et les positions, avec une base SQLite et des notifications push pour prévenir les aidants."
-        }
-      },
-      {
-        owner: "team",
-        step: { en: "Interactive map and real-time geolocated alerts", fr: "Carte interactive et alertes géolocalisées en temps réel" },
-        desc: {
-          en: "The app (Vue.js / Flutter) shows an interactive map and follows the position of the person who raised the alert in real time.",
-          fr: "L'app (Vue.js / Flutter) affiche une carte interactive et suit en temps réel la position de la personne qui a lancé l'alerte."
-        }
-      },
-      {
-        owner: "team",
-        step: { en: "CI/CD", fr: "CI/CD" },
-        desc: {
-          en: "A CI/CD pipeline runs on every push to the repository.",
-          fr: "Un pipeline CI/CD s'exécute à chaque push sur le dépôt."
+        title: { en: "Backend and real-time alerts", fr: "Backend et alertes en temps réel" },
+        body: {
+          en: "A REST API in Python / FastAPI handles users, alerts and positions, with a SQLite database and push notifications to warn helpers.\n\nThe app (Vue.js / Flutter) shows an interactive map and follows the position of the person who raised the alert in real time. A CI/CD pipeline runs on every push to the repository.",
+          fr: "Une API REST en Python / FastAPI gère les utilisateurs, les alertes et les positions, avec une base SQLite et des notifications push pour prévenir les aidants.\n\nL'app (Vue.js / Flutter) affiche une carte interactive et suit en temps réel la position de la personne qui a lancé l'alerte. Un pipeline CI/CD s'exécute à chaque push sur le dépôt."
         }
       }
     ]
@@ -215,7 +179,7 @@ export const projects = [
     },
     fullDescription: {
       en: "As part of MiNET's communication team, I led the promotional campaign for the MiCloud conference, whose theme was digital sovereignty. The conference features talks by professors and industry professionals.",
-      fr: "Au sein du pôle communication de l'association MiNET, j'ai réalisé la campagne de promotion de la conférence MiCloud, qui avait pour thème la souveraineté numérique. La conférence s'articule autour de prises de parole d'intervenants (professeurs, professionnels)."
+      fr: "Au sein du pôle communication de l'association MiNET, j'ai réalisé la campagne de promotion de la conférence MiCloud, qui avait pour thème la souveraineté numérique. La conférence s'articule autour de prises de parole de professeurs et de professionnels."
     },
     technos: [
       { name: "Figma", icon: "figma.svg" },
@@ -223,45 +187,52 @@ export const projects = [
       { name: "After Effects", icon: "ae.svg" },
       { name: "DaVinci Resolve", icon: "davinci.svg" }
     ],
-    planAction: [
+    chapters: [
       {
-        step: { en: "Visual identity", fr: "Identité visuelle" },
-        desc: {
+        title: { en: "Finding the right tone", fr: "Trouver le bon ton" },
+        body: {
           en: "To tackle digital sovereignty, I proposed three moodboards to the other MiNET members. We chose a colourful, pop identity to make the event more appealing to students, who often assume these conferences are too technical.",
-          fr: "Pour aborder le thème de la souveraineté numérique, j'ai proposé trois moodboards différents aux autres membres de l'association MiNET. Nous avons choisi une identité colorée et pop, ce qui permet de rendre l'événement bien plus attractif pour les étudiants, qui s'imaginent souvent que ces conférences sont trop techniques."
+          fr: "Pour aborder la souveraineté numérique, j'ai proposé trois moodboards aux autres membres de MiNET. Nous avons choisi une identité colorée et pop, pour rendre l'événement plus attractif auprès des étudiants, qui imaginent souvent ces conférences trop techniques."
         },
-        gallery: ["moodboard1.png", "moodboard2.png", "moodboard3.png"]
+        media: [
+          { src: "moodboard1.png", caption: { en: "Moodboard 1", fr: "Moodboard 1" } },
+          { src: "moodboard2.png", caption: { en: "Moodboard 2", fr: "Moodboard 2" } },
+          { src: "moodboard3.png", caption: { en: "Moodboard 3", fr: "Moodboard 3" } }
+        ]
       },
       {
-        step: { en: "Communication strategy", fr: "Stratégie de communication" },
-        desc: {
-          en: "I planned the campaign to start six weeks before the event, with print, digital and goodies, and set clear deadlines to coordinate with the school and the partner companies (speakers).",
-          fr: "J'ai structuré le planning de communication pour démarrer la diffusion un mois et demi avant l'événement, en prévoyant des supports variés : physique, numérique et goodies. J'ai également défini des échéances précises pour coordonner nos échanges avec l'école et les entreprises partenaires (intervenants)."
+        title: { en: "Planning the campaign", fr: "Planifier la campagne" },
+        body: {
+          en: "I planned the campaign to start six weeks before the event, mixing print, digital and goodies, and set clear deadlines to coordinate with the school and the partner companies providing speakers.",
+          fr: "J'ai planifié la campagne pour démarrer six semaines avant l'événement, en mêlant supports physiques, numériques et goodies, et fixé des échéances précises pour coordonner nos échanges avec l'école et les entreprises partenaires (intervenants)."
         },
-        gallery: ["planning.png"]
+        media: [
+          { src: "planning.png", caption: { en: "Communication schedule", fr: "Planning de communication" } }
+        ]
       },
       {
-        step: { en: "Brand guidelines and variations", fr: "Charte graphique et ses déclinaisons" },
-        desc: {
+        title: { en: "Brand guidelines and posters", fr: "Charte graphique et affiches" },
+        body: {
           en: "Once the art direction was approved, I set up the brand guidelines with the logo and typefaces, then created icons and posters illustrating each sub-theme of digital sovereignty.",
-          fr: "Une fois la direction artistique validée, j'ai mis en place la charte graphique avec le logo et les typographies. J'ai ensuite créé plusieurs icônes et affiches spécifiques pour illustrer les différents sous-thèmes de la souveraineté numérique."
+          fr: "Une fois la direction artistique validée, j'ai posé la charte graphique avec le logo et les typographies, puis créé des icônes et des affiches illustrant chaque sous-thème de la souveraineté numérique."
         },
-        gallery: ["charte-graphique-micloud.png"]
+        media: [
+          { src: "charte-graphique-micloud.png", caption: { en: "Brand guidelines", fr: "Charte graphique" } },
+          { src: "affiche1.png", caption: { en: "Poster", fr: "Affiche" } },
+          { src: "affiche2.webp", caption: { en: "Poster", fr: "Affiche" } },
+          { src: "affiche3.webp", caption: { en: "Poster", fr: "Affiche" } },
+          { src: "affiche4.webp", caption: { en: "Poster", fr: "Affiche" } }
+        ]
       },
       {
-        step: { en: "Reaching students", fr: "Communication auprès des étudiants" },
-        desc: {
-          en: "We launched the campaign at Télécom SudParis with many formats: save-the-dates, Instagram posts, banners on campus buildings and information emails. Temporary event-themed profile pictures helped build momentum on campus.",
-          fr: "Nous avons lancé la communication auprès des étudiants de Télécom SudParis à l'aide de formats très divers : des « Save the date », des posts Instagram, des bannières sur les bâtiments et des mails d'information. Pour créer une dynamique sur le campus, nous avons aussi partagé des photos de profil temporaires aux couleurs de l'événement."
+        title: { en: "On campus and on the day", fr: "Sur le campus et le jour J" },
+        body: {
+          en: "We reached Télécom SudParis students through many formats: save-the-dates, Instagram posts, banners on campus buildings and information emails. Temporary event-themed profile pictures helped build momentum.\n\nOn the day, I covered the conference live on Instagram with interactive stories, and filmed the talks and the afterwork to gather footage for an aftermovie.",
+          fr: "Nous avons touché les étudiants de Télécom SudParis par de nombreux formats : « Save the date », posts Instagram, bannières sur les bâtiments et mails d'information. Des photos de profil temporaires aux couleurs de l'événement ont aidé à créer une dynamique.\n\nLe jour J, j'ai couvert la conférence en direct sur Instagram avec des stories interactives, et filmé les interventions et l'afterwork pour rassembler des rushs en vue d'un aftermovie."
         },
-        gallery: ["affiche1.png", "affiche2.webp", "affiche3.webp", "affiche4.webp", "savethedate.mp4"]
-      },
-      {
-        step: { en: "Coverage on the day", fr: "Couverture le jour J" },
-        desc: {
-          en: "On the day, I covered the conference live on Instagram with interactive stories, and filmed the talks and the afterwork to gather footage for an aftermovie.",
-          fr: "Le jour de la conférence, j'ai assuré le suivi en direct sur Instagram à travers plusieurs stories interactives. J'ai également filmé différents moments de la conférence et de l'afterwork afin de rassembler des rushs pour la création d'un aftermovie."
-        }
+        media: [
+          { src: "savethedate.mp4", caption: { en: "Save the date video", fr: "Vidéo « Save the date »" } }
+        ]
       }
     ]
   },
@@ -278,45 +249,49 @@ export const projects = [
     },
     fullDescription: {
       en: "Communication campaign for the very first Gala des Télécoms at the Palais Brongniart in Paris, co-organised by the Forum des Télécommunications and the Student Union. As communication lead in a team of three for the Forum, I created the event's identity and ran its promotion.",
-      fr: "Campagne de communication pour la toute première édition du Gala des Télécoms au Palais Brongniart, co-organisée par le Forum des Télécommunications et le BDE. En tant que responsable communication au sein d'une équipe de trois personnes pour le Forum, j'ai géré la création de l'identité et la promotion de l'événement."
+      fr: "Campagne de communication pour la toute première édition du Gala des Télécoms au Palais Brongniart, co-organisée par le Forum des Télécommunications et le BDE. Responsable communication au sein d'une équipe de trois pour le Forum, j'ai créé l'identité de l'événement et piloté sa promotion."
     },
     technos: [
       { name: "Figma", icon: "figma.svg" },
       { name: "Photoshop", icon: "photoshop.svg" },
       { name: "DaVinci Resolve", icon: "davinci.svg" }
     ],
-    planAction: [
+    chapters: [
       {
-        step: { en: "Identity", fr: "Identité" },
-        desc: {
-          en: "We chose a 'Midnight Sky' theme with a blue and gold palette for an elegant look, which also subtly nods to the colours of both organising associations.",
-          fr: "Nous avons opté pour le thème « Midnight Sky » avec une palette bleu et doré pour un rendu très chic. Ce choix permettait aussi de faire un clin d'œil discret aux couleurs des deux associations organisatrices."
+        title: { en: "A 'Midnight Sky' identity", fr: "Une identité « Midnight Sky »" },
+        body: {
+          en: "We chose a 'Midnight Sky' theme with a blue and gold palette for an elegant look, which also subtly nods to the colours of both organising associations. I then created the brand guidelines for this first edition, in agreement with the team.",
+          fr: "Nous avons choisi le thème « Midnight Sky » avec une palette bleu et doré pour un rendu chic, qui fait aussi un clin d'œil discret aux couleurs des deux associations organisatrices. J'ai ensuite créé la charte graphique de cette première édition, en accord avec l'équipe."
         },
-        gallery: ["moodboard.webp"]
+        media: [
+          { src: "moodboard.webp", caption: { en: "Moodboard", fr: "Moodboard" } },
+          { src: "charte-graphique-gala.png", caption: { en: "Brand guidelines", fr: "Charte graphique" } }
+        ]
       },
       {
-        step: { en: "Brand guidelines", fr: "Charte graphique" },
-        desc: {
-          en: "I created the brand guidelines for this first edition of the Gala, in agreement with the team.",
-          fr: "J'ai créé la charte graphique de cette première édition du Gala en accord avec les membres de l'équipe."
-        },
-        gallery: ["charte-graphique-gala.png"]
-      },
-      {
-        step: { en: "Communication materials", fr: "Supports de communication" },
-        desc: {
+        title: { en: "Communication materials", fr: "Supports de communication" },
+        body: {
           en: "The campaign ran on posters, Instagram posts, physical banners and emails to students. With Luca Fuster, I also designed the visuals for partner companies such as Fortress.",
-          fr: "Nous avons décliné la communication sur des affiches, des posts Instagram, des bannières physiques et des mails aux étudiants. En binôme avec Luca Fuster, je me suis également chargée des visuels destinés aux entreprises partenaires comme Fortress."
+          fr: "La campagne s'est déclinée en affiches, posts Instagram, bannières physiques et mails aux étudiants. En binôme avec Luca Fuster, j'ai aussi réalisé les visuels destinés aux entreprises partenaires comme Fortress."
         },
-        gallery: ["affiche1.webp", "banniere.webp", "affiche2.png", "pp.webp", "ticket.png"]
+        media: [
+          { src: "affiche1.webp", caption: { en: "Poster", fr: "Affiche" } },
+          { src: "affiche2.png", caption: { en: "Poster", fr: "Affiche" } },
+          { src: "banniere.webp", caption: { en: "Banner", fr: "Bannière" } },
+          { src: "pp.webp", caption: { en: "Profile picture", fr: "Photo de profil" } },
+          { src: "ticket.png", caption: { en: "Ticket", fr: "Billet" } }
+        ]
       },
       {
-        step: { en: "Videos", fr: "Vidéos" },
-        desc: {
+        title: { en: "Teaser and aftermovie", fr: "Teaser et aftermovie" },
+        body: {
           en: "The video strategy relied on two pieces: a teaser to launch the event, then an aftermovie looking back on the evening.",
-          fr: "La stratégie vidéo s'est articulée autour de deux réalisations majeures. Nous avons d'abord diffusé un teaser pour lancer l'événement, puis un aftermovie pour proposer un retour en images sur la soirée."
+          fr: "La stratégie vidéo reposait sur deux réalisations : un teaser pour lancer l'événement, puis un aftermovie pour revenir en images sur la soirée."
         },
-        gallery: ["https://www.youtube.com/watch?v=bBFiJ1ReMxs", "https://www.youtube.com/watch?v=Hh6zK9JlhgE"]
+        media: [
+          { src: "https://www.youtube.com/watch?v=bBFiJ1ReMxs", caption: { en: "Teaser", fr: "Teaser" } },
+          { src: "https://www.youtube.com/watch?v=Hh6zK9JlhgE", caption: { en: "Aftermovie", fr: "Aftermovie" } }
+        ]
       }
     ]
   },
@@ -333,29 +308,36 @@ export const projects = [
     },
     fullDescription: {
       en: "Communication campaign for the second Bike and Run, a sports event organised by the Forum des Télécommunications where company professionals and students race in pairs. I handled the graphic design and the promotion of the event on campus.",
-      fr: "Campagne de communication pour la deuxième édition du Bike and Run, un événement sportif organisé par le Forum des Télécommunications qui rassemble des professionnels d'entreprises et des étudiants en binômes. J'ai pris en charge la déclinaison graphique et la promotion de l'événement sur le campus."
+      fr: "Campagne de communication pour la deuxième édition du Bike and Run, un événement sportif organisé par le Forum des Télécommunications où professionnels d'entreprises et étudiants courent en binômes. J'ai pris en charge la déclinaison graphique et la promotion de l'événement sur le campus."
     },
     technos: [
       { name: "Figma", icon: "figma.svg" },
       { name: "Photoshop", icon: "photoshop.svg" },
       { name: "DaVinci Resolve", icon: "davinci.svg" }
     ],
-    planAction: [
+    chapters: [
       {
-        step: { en: "Identity", fr: "Identité" },
-        desc: {
+        title: { en: "Building on an existing logo", fr: "Partir d'un logo existant" },
+        body: {
           en: "The logo already existed for this second edition, so we built a visual world mixing black and white with the logo's colours.",
-          fr: "Le logo étant déjà existant pour cette deuxième édition, nous avons créé un univers graphique mêlant le noir et blanc aux couleurs du logo."
+          fr: "Le logo existait déjà pour cette deuxième édition : nous avons donc créé un univers graphique mêlant le noir et blanc aux couleurs du logo."
         },
-        gallery: ["charte-graphique-bike-and-run.webp"]
+        media: [
+          { src: "charte-graphique-bike-and-run.webp", caption: { en: "Brand guidelines", fr: "Charte graphique" } }
+        ]
       },
       {
-        step: { en: "Materials", fr: "Supports" },
-        desc: {
+        title: { en: "A month of campaign", fr: "Un mois de campagne" },
+        body: {
           en: "We reached students for a month through posters, Instagram posts, banners and profile pictures, to encourage sign-ups to race alongside professionals.",
-          fr: "Nous avons communiqué auprès des étudiants pendant un mois via des affiches, des posts Instagram, des bannières et des photos de profil. Cette stratégie ciblée visait à encourager les inscriptions pour courir aux côtés des professionnels."
+          fr: "Pendant un mois, nous avons communiqué auprès des étudiants avec des affiches, des posts Instagram, des bannières et des photos de profil, pour encourager les inscriptions aux côtés des professionnels."
         },
-        gallery: ["affiche1.webp", "affiche2.webp", "pp.png", "banniere.webp"]
+        media: [
+          { src: "affiche1.webp", caption: { en: "Poster", fr: "Affiche" } },
+          { src: "affiche2.webp", caption: { en: "Poster", fr: "Affiche" } },
+          { src: "banniere.webp", caption: { en: "Banner", fr: "Bannière" } },
+          { src: "pp.png", caption: { en: "Profile picture", fr: "Photo de profil" } }
+        ]
       }
     ]
   },
@@ -366,43 +348,44 @@ export const projects = [
     logo: "GATE/gate.png",
     folder: "GATE/",
     "princ-visual": "slide.webp",
+    dates: "2024 - 2025",
+    badge: { en: "Jury's Favorite Award", fr: "Prix coup de cœur du jury" },
     projetType: {
       en: "Student engagement project (2024-2025), Jury's Favorite Award",
       fr: "Projet d'engagement étudiant (2024-2025), Prix coup de cœur du jury"
     },
     fullDescription: {
-      en: "Part'Âgé is a GATE project that teaches basic IT skills to seniors in Évry. The goal is to reduce the digital divide and support the social inclusion of older people by helping them acquire basic digital skills. We taught two groups of 10 to 15 seniors and refurbished 21 donated computers.",
-      fr: "Part'Âgé est un projet GATE qui vise à donner des cours d'informatique élémentaire aux seniors de la ville d'Évry. L'objectif est de réduire la fracture numérique et de favoriser l'inclusion sociale des personnes âgées en leur permettant d'acquérir des compétences numériques de base. Nous avons formé deux groupes de 10 à 15 seniors et reconditionné 21 ordinateurs donnés."
+      en: "Part'Âgé is a GATE project that teaches basic IT skills to seniors in Évry, to reduce the digital divide and support their social inclusion. We taught two groups of 10 to 15 seniors and refurbished 21 donated computers.",
+      fr: "Part'Âgé est un projet GATE qui donne des cours d'informatique élémentaire aux seniors d'Évry, pour réduire la fracture numérique et favoriser leur inclusion sociale. Nous avons formé deux groupes de 10 à 15 seniors et reconditionné 21 ordinateurs donnés."
     },
     technos: [
       { name: "Figma", icon: "figma.svg" },
       { name: "PowerPoint", icon: "powerpoint.svg" },
       { name: "Google Slides", icon: "google-slides.svg" }
     ],
-    planAction: [
+    chapters: [
       {
-        step: { en: "Summary sheets", fr: "Fiches récapitulatives" },
-        desc: {
+        title: { en: "Summary sheets for seniors", fr: "Des fiches pensées pour les seniors" },
+        body: {
           en: "I designed a summary sheet for each IT lesson so the seniors could easily review at home. To suit this audience, I chose a very visual, clean and easy-to-read format.",
-          fr: "J'ai conçu des fiches résumées pour chaque cours d'informatique afin d'aider les seniors à réviser facilement chez eux. Pour m'adapter au mieux à ce public, j'ai privilégié un format très visuel, épuré et simple à lire."
+          fr: "J'ai conçu une fiche résumée pour chaque cours d'informatique, pour que les seniors puissent réviser facilement chez eux. Pour ce public, j'ai privilégié un format très visuel, épuré et simple à lire."
         },
-        gallery: ["fiche1.webp", "fiche2.webp", "fiche3.png"]
+        media: [
+          { src: "fiche1.webp", caption: { en: "Summary sheet", fr: "Fiche récapitulative" } },
+          { src: "fiche2.webp", caption: { en: "Summary sheet", fr: "Fiche récapitulative" } },
+          { src: "fiche3.png", caption: { en: "Summary sheet", fr: "Fiche récapitulative" } }
+        ]
       },
       {
-        step: { en: "Final presentation slides", fr: "Support de soutenance" },
-        desc: {
-          en: "For the final presentation, I prepared slides with a strict rule: almost no text. I relied on visual content to support and energise our talk.",
-          fr: "Pour présenter le projet lors de la soutenance finale, j'ai préparé des slides avec une consigne stricte : presque aucun texte. J'ai donc misé sur un contenu très visuel pour accompagner et dynamiser notre présentation orale."
+        title: { en: "Presenting the project", fr: "Présenter le projet" },
+        body: {
+          en: "For the final presentation, I prepared slides with a strict rule: almost no text, so that visuals support and energise the talk.\n\nI also designed the final project poster, which counted towards our grade and promoted the project.",
+          fr: "Pour la soutenance finale, j'ai préparé des slides avec une règle stricte : presque aucun texte, pour que les visuels portent et dynamisent la présentation orale.\n\nJ'ai aussi réalisé l'affiche finale du projet, qui comptait dans notre note et servait à le promouvoir."
         },
-        gallery: ["soutenance.pdf"]
-      },
-      {
-        step: { en: "Project poster", fr: "Poster du projet" },
-        desc: {
-          en: "I also designed the final Part'Âgé poster, which counted towards our final grade. The goal was a striking poster to promote the project.",
-          fr: "J'ai également réalisé l'affiche finale du projet Part'Âgé, un élément important qui comptait pour notre note finale. L'objectif était de proposer une affiche percutante pour promouvoir le projet."
-        },
-        gallery: ["affiche.webp"]
+        media: [
+          { src: "soutenance.pdf", pages: 50, caption: { en: "Final presentation slides", fr: "Support de soutenance" } },
+          { src: "affiche.webp", caption: { en: "Project poster", fr: "Affiche du projet" } }
+        ]
       }
     ]
   },
@@ -418,22 +401,24 @@ export const projects = [
       fr: "Animation vidéo d'un logo pour le club INTv"
     },
     fullDescription: {
-      en: "For the INTv club's video content, I created animations of its logo, combining work in After Effects and DaVinci Resolve. I adapted the logo in Figma so it would work on the background.",
-      fr: "Dans le cadre de contenus vidéo pour le club INTv, j'ai réalisé des animations du logo. Ces animations mélangent un travail sur After Effects et sur DaVinci Resolve. J'ai adapté le logo sur Figma pour qu'il s'intègre au fond."
+      en: "For the INTv club's video content, I created animations of its logo, combining work in After Effects and DaVinci Resolve.",
+      fr: "Pour les contenus vidéo du club INTv, j'ai réalisé des animations de son logo, en combinant un travail sur After Effects et sur DaVinci Resolve."
     },
     technos: [
       { name: "DaVinci Resolve", icon: "davinci.svg" },
       { name: "After Effects", icon: "ae.svg" },
       { name: "Figma", icon: "figma.svg" }
     ],
-    planAction: [
+    chapters: [
       {
-        step: { en: "Animation", fr: "Animation" },
-        desc: {
-          en: "One of the animations I made, with a cyberpunk and electro style.",
-          fr: "Voici l'une des animations que j'ai réalisées, avec un style cyberpunk et électro."
+        title: { en: "A cyberpunk animation", fr: "Une animation cyberpunk" },
+        body: {
+          en: "I adapted the logo in Figma so it would blend into the background, then animated it with a cyberpunk and electro style.",
+          fr: "J'ai adapté le logo sur Figma pour qu'il s'intègre au fond, puis je l'ai animé dans un style cyberpunk et électro."
         },
-        gallery: ["animation-intv.mp4"]
+        media: [
+          { src: "animation-intv.mp4", caption: { en: "Logo animation", fr: "Animation du logo" } }
+        ]
       }
     ]
   }
