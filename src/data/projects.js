@@ -174,6 +174,191 @@ export const projects = [
     ]
   },
   {
+    id: "algo-repartie",
+    category: "dev",
+    title: { en: "Distributed algorithms", fr: "Algorithmique répartie" },
+    logo: "AlgoRepartie/logo.svg",
+    folder: "AlgoRepartie/",
+    "princ-visual": "cover.webp",
+    dates: "2026",
+    badge: { en: "Course project · solo", fr: "Projet de cours · en solo" },
+    projetType: {
+      en: "CSC 4509 course at Télécom SudParis: distributed algorithms and network programming in Java",
+      fr: "Module CSC 4509 à Télécom SudParis : algorithmique répartie et programmation réseau en Java"
+    },
+    shortDescription: {
+      en: "Leader election, causal broadcast, mutual exclusion and termination detection, implemented in Java on top of Java NIO.",
+      fr: "Élection, diffusion causale, exclusion mutuelle et détection de terminaison, implémentées en Java sur une base Java NIO."
+    },
+    fullDescription: {
+      en: "In the distributed algorithms course, I implemented four classic distributed algorithms in Java, on top of network programming with Java NIO. The project was designed for pairs; I carried it out on my own. I also studied a research paper on group communication systems in a team of four.",
+      fr: "Dans le module d'algorithmique répartie, j'ai implémenté quatre algorithmes répartis classiques en Java, sur une base de programmation réseau en Java NIO. Le projet était prévu en binôme : je l'ai réalisé seule. J'ai aussi étudié un article de recherche sur les systèmes de communication de groupe, en équipe de quatre."
+    },
+    highlights: [
+      { en: "A project designed for pairs, carried out alone", fr: "Un projet prévu en binôme, réalisé seule" },
+      { en: "Leader election, causal broadcast, distributed mutual exclusion, termination detection", fr: "Élection, diffusion causale, exclusion mutuelle répartie, détection de terminaison" },
+      { en: "Network programming in Java NIO (non-blocking I/O)", fr: "Programmation réseau en Java NIO (entrées-sorties non bloquantes)" },
+      { en: "Research paper study: group communication systems (ACM Computing Surveys)", fr: "Étude d'un article de recherche : systèmes de communication de groupe (ACM Computing Surveys)" }
+    ],
+    technos: [
+      { name: "Java" },
+      { name: "Java NIO" }
+    ],
+    chapters: [
+      {
+        owner: "me",
+        title: { en: "Network programming with Java NIO", fr: "Programmation réseau avec Java NIO" },
+        body: {
+          en: "The course starts from the network layer: processes exchange messages over a best-effort network, using Java NIO non-blocking sockets. It covers acknowledgements and delivery semantics: at most once, at least once, exactly once.",
+          fr: "Le module part de la couche réseau : des processus échangent des messages sur un réseau « best effort », avec les sockets non bloquantes de Java NIO. Il aborde les acquittements et les sémantiques de transmission : au plus une fois, au moins une fois, exactement une fois."
+        }
+      },
+      {
+        owner: "me",
+        title: { en: "Four distributed algorithms, implemented alone", fr: "Quatre algorithmes répartis, réalisés seule" },
+        body: {
+          en: "On top of this layer, I implemented four algorithms, each with its code and a report:\n\nLeader election, so that processes agree on a single coordinator. Causal broadcast, so that messages are delivered in an order that respects causality. Distributed mutual exclusion, so that only one process at a time enters the critical section, without a central coordinator. Termination detection, to know when a distributed computation has really finished.\n\nThe project was meant for pairs; I carried it out on my own.",
+          fr: "Sur cette base, j'ai implémenté quatre algorithmes, chacun avec son code et un rapport :\n\nL'élection, pour que les processus s'accordent sur un coordinateur unique. La diffusion causale, pour que les messages soient livrés dans un ordre qui respecte la causalité. L'exclusion mutuelle répartie, pour qu'un seul processus à la fois entre en section critique, sans coordinateur central. La détection de terminaison, pour savoir quand un calcul réparti est réellement terminé.\n\nLe projet était prévu en binôme : je l'ai réalisé seule."
+        }
+      },
+      {
+        owner: "team",
+        title: { en: "Studying a research paper", fr: "Étudier un article de recherche" },
+        body: {
+          en: "In a team of four, we studied and presented 'Group Communication Specifications: A Comprehensive Study' by Chockler, Keidar and Vitenberg (ACM Computing Surveys, 2001). Group communication systems are a building block for fault tolerance through active replication.\n\nOur presentation covered the system model, group membership and views, virtual synchrony, and multicast ordering properties, such as the difference between strong and weak total order when the network is partitioned. We illustrated them with collaborative editing and a distributed shopping cart that reconciles its state after a partition.",
+          fr: "En équipe de quatre, nous avons étudié et présenté l'article « Group Communication Specifications: A Comprehensive Study » de Chockler, Keidar et Vitenberg (ACM Computing Surveys, 2001). Les systèmes de communication de groupe sont une brique de base de la tolérance aux fautes par réplication active.\n\nNotre présentation couvrait le modèle du système, le membership et les vues, la synchronie virtuelle et les propriétés d'ordonnancement du multicast, comme la différence entre ordre total fort et faible lorsque le réseau est partitionné. Nous les avons illustrées par l'édition collaborative et un panier d'e-commerce réparti qui réconcilie son état après une partition."
+        }
+      }
+    ]
+  },
+  {
+    id: "findmyecocup",
+    category: "dev",
+    title: "FindMyEcocup",
+    logo: "FindMyEcocup/logo.svg",
+    folder: "FindMyEcocup/",
+    "princ-visual": "cover.webp",
+    dates: "2025",
+    badge: { en: "Course project", fr: "Projet de cours" },
+    projetType: {
+      en: "CSC 4101 course at Télécom SudParis: web architectures and applications",
+      fr: "Module CSC 4101 à Télécom SudParis : architectures et applications web"
+    },
+    shortDescription: {
+      en: "Inventory management web app built with Symfony, with administrator and visitor access.",
+      fr: "Application web de gestion d'inventaire développée avec Symfony, avec accès administrateur et visiteur."
+    },
+    fullDescription: {
+      en: "A web application built with the Symfony PHP framework during the web architectures course. It manages an inventory of items, with different rights for administrators and visitors. I also designed its visual identity.",
+      fr: "Une application web développée avec le framework PHP Symfony dans le cadre du module d'architectures web. Elle gère un inventaire d'objets, avec des droits différents pour les administrateurs et les visiteurs. J'ai aussi conçu son identité visuelle."
+    },
+    highlights: [
+      { en: "Server-side web app with Symfony, Doctrine and Twig", fr: "Application web côté serveur avec Symfony, Doctrine et Twig" },
+      { en: "Inventory management (create, read, update, delete)", fr: "Gestion d'inventaire (création, lecture, modification, suppression)" },
+      { en: "Administrator and visitor roles", fr: "Rôles administrateur et visiteur" },
+      { en: "Logo and app icon designed in-house", fr: "Logo et icône de l'application conçus par moi" }
+    ],
+    technos: [
+      { name: "Symfony" },
+      { name: "PHP" },
+      { name: "Doctrine" },
+      { name: "Twig" },
+      { name: "Figma", icon: "figma.svg" }
+    ],
+    chapters: [
+      {
+        title: { en: "A classic 3-tier architecture", fr: "Une architecture 3-tiers classique" },
+        body: {
+          en: "The application follows the architecture taught in the course: Symfony controllers handle HTTP requests, Twig templates build the HTML on the server, and the Doctrine ORM maps the application's entities to a SQL database.",
+          fr: "L'application suit l'architecture vue en cours : les contrôleurs Symfony traitent les requêtes HTTP, les templates Twig construisent le HTML côté serveur, et l'ORM Doctrine fait le lien entre les entités de l'application et une base de données SQL."
+        }
+      },
+      {
+        title: { en: "Inventory and access rights", fr: "Inventaire et droits d'accès" },
+        body: {
+          en: "Users browse an inventory of items. Administrators can create, edit and delete entries, while visitors have read-only access.",
+          fr: "Les utilisateurs consultent un inventaire d'objets. Les administrateurs peuvent créer, modifier et supprimer des entrées, tandis que les visiteurs ont un accès en lecture."
+        }
+      },
+      {
+        owner: "me",
+        title: { en: "A visual identity", fr: "Une identité visuelle" },
+        body: {
+          en: "I designed the FindMyEcocup logo and app icon, in light and dark versions.",
+          fr: "J'ai conçu le logo et l'icône de FindMyEcocup, en version claire et sombre."
+        }
+      }
+    ]
+  },
+  {
+    id: "elemory",
+    category: "dev",
+    title: "Elemory",
+    logo: "Elemory/logo.svg",
+    folder: "Elemory/",
+    "princ-visual": "cover.webp",
+    dates: "2025",
+    badge: { en: "Team of 5 · CTO & product", fr: "Équipe de 5 · CTO & produit" },
+    projetType: {
+      en: "Entrepreneurship project at Télécom SudParis: a startup designed and pitched in one week",
+      fr: "Projet Entreprendre à Télécom SudParis : une startup conçue et pitchée en une semaine"
+    },
+    shortDescription: {
+      en: "Startup project for an app that helps seniors with memory problems. My role: CTO and product manager.",
+      fr: "Projet de startup pour une application qui aide les seniors ayant des troubles de la mémoire. Mon rôle : CTO et product manager."
+    },
+    fullDescription: {
+      en: "In one week, our team of five designed and pitched Elemory, a mobile and tablet app that helps people with early or moderate memory problems, including Alzheimer's disease, through simple memory games, daily reminders and a link with their family. I was CTO and product manager.",
+      fr: "En une semaine, notre équipe de cinq a conçu et pitché Elemory, une application mobile et tablette qui aide les personnes ayant des troubles de la mémoire légers à modérés, dont la maladie d'Alzheimer, grâce à des jeux de mémoire simples, des rappels du quotidien et un lien avec leur famille. J'étais CTO et product manager."
+    },
+    highlights: [
+      { en: "My role: CTO / product manager, in charge of the solution, the demo, the technical roadmap and the call to action", fr: "Mon rôle : CTO / product manager, en charge de la solution, de la démo, de la roadmap technique et du call to action" },
+      { en: "Product designed for seniors: very simple, tablet-first interface", fr: "Produit pensé pour les seniors : interface très simple, d'abord sur tablette" },
+      { en: "Technical roadmap in 3 phases, from MVP to personalisation and support", fr: "Roadmap technique en 3 phases, du MVP à la personnalisation et au soutien" },
+      { en: "Team: market study, business plan, marketing and CSR impact", fr: "Équipe : étude de marché, business plan, marketing et impact RSE" }
+    ],
+    technos: [
+      { name: "Flutter", icon: "flutter.svg" },
+      { name: "FastAPI", icon: "fastapi.svg" },
+      { name: "PostgreSQL", icon: "postgresql.svg" },
+      { name: "Figma", icon: "figma.svg" }
+    ],
+    chapters: [
+      {
+        owner: "team",
+        title: { en: "The problem", fr: "Le problème" },
+        body: {
+          en: "More than one million people in France live with Alzheimer's disease, and the burden mostly falls on their families. To confirm the need, we spoke with a care assistant and a geriatrician from France Alzheimer.",
+          fr: "Plus d'un million de personnes vivent avec la maladie d'Alzheimer en France, et la charge repose surtout sur les familles. Pour confirmer le besoin, nous avons échangé avec une aide-soignante et une gériatre de France Alzheimer."
+        }
+      },
+      {
+        owner: "me",
+        title: { en: "Designing the solution", fr: "Concevoir la solution" },
+        body: {
+          en: "I defined the product. A first test sets the user's level, then mini-games train memory: memory cards, puzzles, spot the difference and a music quiz, some personalised with the user's own memories. The app also gives reminders for daily tasks such as medication and appointments, quick access to emergency contacts, and notifies the family if game results decline.\n\nThe interface is designed for seniors: very simple, tablet-first, readable for people with vision difficulties, and it only ever shows positive progress.",
+          fr: "J'ai défini le produit. Un premier test fixe le niveau de l'utilisateur, puis des mini-jeux entraînent la mémoire : memory, puzzles, jeu des différences et quiz musical, certains personnalisés avec les souvenirs de la personne. L'application propose aussi des rappels du quotidien comme la prise de médicaments et les rendez-vous, un accès rapide aux contacts d'urgence, et prévient la famille si les résultats aux jeux baissent.\n\nL'interface est pensée pour les seniors : très simple, d'abord sur tablette, lisible malgré les difficultés de vision, et elle ne montre jamais que des progrès."
+        }
+      },
+      {
+        owner: "me",
+        title: { en: "The technical roadmap", fr: "La roadmap technique" },
+        body: {
+          en: "I chose the stack: a Flutter or React Native app, a Python backend (FastAPI or Django) with PostgreSQL and S3 storage, and a small self-hostable language model for adaptive features, on green hosting.\n\nThe roadmap has three phases. MVP in 4 months: three mini-games, reminders and emergency contacts. Personalisation in 3 months: more games, an adaptive difficulty algorithm and personalised content. Support in 3 months: data analysis shared with the caregiver and a help chatbot.",
+          fr: "J'ai choisi la stack : une application Flutter ou React Native, un backend Python (FastAPI ou Django) avec PostgreSQL et un stockage S3, et un petit modèle de langage auto-hébergeable pour les fonctions adaptatives, sur un hébergement vert.\n\nLa roadmap compte trois phases. MVP en 4 mois : trois mini-jeux, les rappels et les contacts d'urgence. Personnalisation en 3 mois : plus de jeux, un algorithme de difficulté adaptative et du contenu personnalisé. Soutien en 3 mois : analyse des données partagée avec l'aidant et chatbot d'aide."
+        }
+      },
+      {
+        owner: "team",
+        title: { en: "Business model and impact", fr: "Modèle économique et impact" },
+        body: {
+          en: "The team built the market study, the business plan over five years, the marketing strategy and the CSR impact: a subscription of €5.99 per month, green hosting, eco-design compatible with older smartphones, and part of the surplus donated to associations. I closed the pitch with the call to action to the jury.",
+          fr: "L'équipe a construit l'étude de marché, le business plan sur cinq ans, la stratégie marketing et l'impact RSE : un abonnement à 5,99 € par mois, un hébergement vert, une éco-conception compatible avec les anciens smartphones, et une partie du surplus reversée à des associations. J'ai conclu le pitch par le call to action au jury."
+        }
+      }
+    ]
+  },
+  {
     id: "micloud",
     category: "design",
     title: "MiCloud 2026",

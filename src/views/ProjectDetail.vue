@@ -93,7 +93,7 @@ watch(viewerIndex, (v) => { document.body.style.overflow = v === null ? '' : 'hi
             :key="tech.name"
             class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 shadow-[3px_3px_6px_#bebebe,-3px_-3px_6px_#ffffff] text-xs font-bold text-slate-600"
           >
-            <img :src="'/icons/' + tech.icon" class="w-4 h-4" alt="" />
+            <img v-if="tech.icon" :src="'/icons/' + tech.icon" class="w-4 h-4" alt="" />
             {{ tech.name }}
           </span>
         </div>
