@@ -296,7 +296,7 @@ export const projects = [
     title: "Elemory",
     logo: "Elemory/logo.svg",
     folder: "Elemory/",
-    "princ-visual": "cover.webp",
+    "princ-visual": "app-accueil.webp",
     dates: "2025",
     badge: { en: "Team of 5 · CTO & product", fr: "Équipe de 5 · CTO & produit" },
     projetType: {
@@ -313,6 +313,7 @@ export const projects = [
     },
     highlights: [
       { en: "My role: CTO / product manager, in charge of the solution, the demo, the technical roadmap and the call to action", fr: "Mon rôle : CTO / product manager, en charge de la solution, de la démo, de la roadmap technique et du call to action" },
+      { en: "I designed the clickable Figma prototype used for the demo", fr: "J'ai conçu le prototype Figma cliquable utilisé pour la démo" },
       { en: "Product designed for seniors: very simple, tablet-first interface", fr: "Produit pensé pour les seniors : interface très simple, d'abord sur tablette" },
       { en: "Technical roadmap in 3 phases, from MVP to personalisation and support", fr: "Roadmap technique en 3 phases, du MVP à la personnalisation et au soutien" },
       { en: "Team: market study, business plan, marketing and CSR impact", fr: "Équipe : étude de marché, business plan, marketing et impact RSE" }
@@ -339,6 +340,17 @@ export const projects = [
           en: "I defined the product. A first test sets the user's level, then mini-games train memory: memory cards, puzzles, spot the difference and a music quiz, some personalised with the user's own memories. The app also gives reminders for daily tasks such as medication and appointments, quick access to emergency contacts, and notifies the family if game results decline.\n\nThe interface is designed for seniors: very simple, tablet-first, readable for people with vision difficulties, and it only ever shows positive progress.",
           fr: "J'ai défini le produit. Un premier test fixe le niveau de l'utilisateur, puis des mini-jeux entraînent la mémoire : memory, puzzles, jeu des différences et quiz musical, certains personnalisés avec les souvenirs de la personne. L'application propose aussi des rappels du quotidien comme la prise de médicaments et les rendez-vous, un accès rapide aux contacts d'urgence, et prévient la famille si les résultats aux jeux baissent.\n\nL'interface est pensée pour les seniors : très simple, d'abord sur tablette, lisible malgré les difficultés de vision, et elle ne montre jamais que des progrès."
         }
+      },
+      {
+        owner: "me",
+        title: { en: "A clickable prototype in Figma", fr: "Un prototype cliquable sur Figma" },
+        body: {
+          en: "For the demo, I designed the app's prototype in Figma. It covers the main screens: the mini-games with points, a game sheet with its rules and a choice of grid size, a memory game, and a puzzle built from a family photo that ends with a celebration.\n\nIt also shows the memories space fed with personal photos, a page of emergency numbers (SAMU, police, fire brigade, 112, 114 for deaf and hard-of-hearing people, and a personal emergency contact), and a calendar of reminders for appointments and family visits.",
+          fr: "Pour la démo, j'ai conçu le prototype de l'application sur Figma. Il couvre les écrans principaux : les mini-jeux avec leurs points, une fiche de jeu avec ses règles et le choix de la taille de grille, un memory, et un puzzle construit à partir d'une photo de famille qui se termine par une célébration.\n\nIl montre aussi l'espace souvenirs alimenté par des photos personnelles, une page de numéros d'urgence (SAMU, police, pompiers, 112, 114 pour les personnes sourdes et malentendantes, et un contact d'urgence personnel), et un calendrier de rappels pour les rendez-vous et les visites de la famille."
+        },
+        media: [
+          { src: "app-puzzle.webp", caption: { en: "Puzzle made from a family photo", fr: "Puzzle réalisé à partir d'une photo de famille" } }
+        ]
       },
       {
         owner: "me",
