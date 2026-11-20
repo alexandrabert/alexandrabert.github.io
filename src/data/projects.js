@@ -588,7 +588,7 @@ export const projects = [
         },
         media: [
           { src: "soutenance.pdf", pages: 50, caption: { en: "Final presentation slides", fr: "Support de soutenance" } },
-          { src: "rapport.pdf", pages: 14, caption: { en: "Team's written report (in French)", fr: "Rapport écrit de l'équipe" } },
+          { src: "rapport.pdf", pages: 16, caption: { en: "Team's written report (in French)", fr: "Rapport écrit de l'équipe" } },
           { src: "affiche.webp", caption: { en: "Project poster", fr: "Affiche du projet" } }
         ]
       }
